@@ -9,12 +9,3 @@ function openFestival(): void {
 function printRunningOrder(): void {
   alert('print');
 }
-
-let createFestivalButton = document.getElementById('createFestivalButton');
-createFestivalButton.onclick = createFestival;
-
-let openFestivalButton = document.getElementById('openFestivalButton');
-openFestivalButton.onclick = openFestival;
-
-let printButton = document.getElementById('printButton');
-printButton.onclick = printRunningOrder;
