@@ -1,8 +1,8 @@
 {
   "name": "roto",
   "productName": "roto",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "0.0.0",
+  "description": "Tool for creating personalized festival running orders",
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && electron-forge start",
@@ -17,6 +17,10 @@
     "email": "de.toolcreator@gmail.com"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toolcreator/roto"
+  },
   "config": {
     "forge": {
       "packagerConfig": {},
