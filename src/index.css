@@ -1,10 +1,21 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 @import "menu/menu.css";
 
-body {
+html, body {
   margin: 0;
+  height: 100%;
 }
 
+main {
+  min-height: 100%;
+  display: flex;
+  background-color: black;
+  color: whitesmoke;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+}
+
+/* TOOLTIP */
 /* Tooltip container */
 .tooltip {
   position: relative;
@@ -25,4 +36,34 @@ body {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+/* FLEXBOX LAYOUT WITH RESIZEABLE BANDLIST*/
+.ro-output {
+  box-sizing: border-box;
+  flex: 1 1 initial;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+.band-list {
+  box-sizing: border-box;
+  flex: 1 1 20%;
+  background-color: #333;
+
+  padding-left: 1em;
+  padding-right: 1em;;
+}
+.handler {
+  width: 20px;
+  padding: 0;
+  cursor: ew-resize;
+  flex: 0 0 auto;
+}
+.handler::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 100%;
+  background: #333; 
+  margin: 0 auto; 
 }
