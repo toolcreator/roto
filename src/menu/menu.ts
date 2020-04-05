@@ -5,8 +5,8 @@ function createFestival(): void {
   const createDialog = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
     modal: true,
-    width: 400,
-    height: 300,
+    width: 220,
+    height: 400,
     webPreferences: {
       nodeIntegration: true
     }
