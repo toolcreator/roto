@@ -1,5 +1,9 @@
-class Band {
-  name: string;
-  category: string;
-  gigs: Gig[];
+import { Gig } from './gig';
+
+export class Band {
+  constructor(
+    public name: string,
+    public category: string,
+    public gigs: Gig[],
+  ) { /* empty */ }
 }
