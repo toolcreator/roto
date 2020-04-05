@@ -1,13 +1,13 @@
 import { FestivalAdapters } from './adapters/festival-adapters';
+import { Band } from './band';
 
-class Festival {
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  bandCategories: string[];
-  adapter: FestivalAdapters;
-  data: {
-    lastUpdated: Date;
-    bands: Band[];
-  };
+export class Festival {
+  constructor(
+    public name: string,
+    public startDate: Date,
+    public endDate: Date,
+    public bandCategories: string[],
+    public adapter: FestivalAdapters,
+    public bands: Band[]
+  ) { /* empty */ }
 }

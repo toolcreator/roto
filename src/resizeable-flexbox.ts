@@ -3,13 +3,13 @@ let isHandlerDragging = false;
 const wrapper = handler.closest('main');
 const rooutput = wrapper.querySelector('.ro-output') as HTMLElement;
 
-document.addEventListener('mousedown', function (e) {
+document.addEventListener('mousedown', e => {
     if (e.target === handler) {
         isHandlerDragging = true;
     }
 });
 
-document.addEventListener('mousemove', function (e) {
+document.addEventListener('mousemove', e => {
     if (!isHandlerDragging) {
         return false;
     }
@@ -19,6 +19,6 @@ document.addEventListener('mousemove', function (e) {
     rooutput.style.width = (Math.max(boxMinWidth, pointerRelativeXpos - 8)) + 'px';
 });
 
-document.addEventListener('mouseup', function (e) {
+document.addEventListener('mouseup', () => {
     isHandlerDragging = false;
 });
