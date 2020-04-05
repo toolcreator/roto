@@ -1,3 +1,5 @@
+import { FestivalAdapters } from './adapters/festival-adapters';
+
 class Festival {
   name: string;
   startDate: Date;
