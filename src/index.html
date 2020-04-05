@@ -9,12 +9,12 @@
 
 <body>
   <div class="menu">
-    <script src="../dist/menu/menu.js"></script>
     <ul>
-      <li><button type="button" class="tooltip" onclick="createFestival()"><i class="material-icons">add_circle_outline</i><span class="tooltiptext">Create Festival</span></button></li>
-      <li><button type="button" class="tooltip" onclick="openFestival()"><i class="material-icons">folder_open</i><span class="tooltiptext">Open Festival</span></button></li>
-      <li><button type="button" class="tooltip" onclick="printRunningOrder()"><i class="material-icons">print</i><span class="tooltiptext">Print Running Order</span></button></li>
+      <li><button type="button" class="tooltip" id="createFestivalButton"><i class="material-icons">add_circle_outline</i><span class="tooltiptext">Create Festival</span></button></li>
+      <li><button type="button" class="tooltip" id="openFestivalButton"><i class="material-icons">folder_open</i><span class="tooltiptext">Open Festival</span></button></li>
+      <li><button type="button" class="tooltip" id="printRunningOrderButton"><i class="material-icons">print</i><span class="tooltiptext">Print Running Order</span></button></li>
     </ul>
+    <script>require('../dist/menu/menu.js');</script>
   </div>
   <main>
     <section class="ro-output">
