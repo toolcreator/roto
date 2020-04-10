@@ -1,0 +1,15 @@
+.date-nav {
+  overflow: hidden;
+}
+
+.date-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.date-nav ul li {
+  float: left;
+  text-align: center;
+  padding: 10px;
+}
