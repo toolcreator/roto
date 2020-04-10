@@ -14,12 +14,12 @@ export interface FestivalChangeSubscriber {
 
 export class Festival {
   constructor(
-    @Field('name') private _name: string,
-    @Field('startDate') private _startDate: DateClass,
-    @Field('endDate') private _endDate: DateClass,
-    @ArrayField('bandCategories', BandCategory) private _bandCategories: BandCategory[],
-    @Field('adapter') private _adapter: FestivalAdapters,
-    @ArrayField('bands', Band) private _bands: Band[]
+    @Field('name') private _name?: string,
+    @Field('startDate') private _startDate?: DateClass,
+    @Field('endDate') private _endDate?: DateClass,
+    @ArrayField('bandCategories', BandCategory) private _bandCategories?: BandCategory[],
+    @Field('adapter') private _adapter?: FestivalAdapters,
+    @ArrayField('bands', Band) private _bands?: Band[]
   ) { /* empty */ }
 
   get name(): string {
@@ -70,7 +70,7 @@ export class Festival {
     this.notifySubscribersOfBandsChange();
   }
 
-  private changeSubscribers: FestivalChangeSubscriber[];
+  private changeSubscribers = new Array<FestivalChangeSubscriber>();
 
   public addChangeSubscriber(listener: FestivalChangeSubscriber): void {
     this.changeSubscribers.push(listener);
