@@ -1,4 +1,4 @@
-import { remote, TouchBarScrubber } from 'electron';
+import { remote } from 'electron';
 
 export class ResizableLayout {
   private constructor() {

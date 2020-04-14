@@ -42,7 +42,9 @@ function submit(): void {
   );
   if (fileName != undefined) {
     fs.writeFileSync(fileName, JSON.stringify(festival));
-    remote.getCurrentWindow().close();
+    const currentWindow = remote.getCurrentWindow();
+    currentWindow.getParentWindow().webContents.send('festival-created', festival);
+    currentWindow.close();
   }
 }
 
