@@ -26,3 +26,7 @@
 .menu button:hover {
   background-color: #111;
 }
+
+.menu button:disabled {
+  color: darkgray;
+}
