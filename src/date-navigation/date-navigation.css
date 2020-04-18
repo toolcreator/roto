@@ -1,32 +1,30 @@
-.menu ul {
+.date-nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #111;
 }
 
-.menu li {
+.date-nav li {
   float: left;
 }
 
-.menu button {
+.date-nav button {
   display: block;
   color: white;
   text-align: center;
   padding: 10px;
   text-decoration: none;
-  background-color: inherit;
   border: 0;
   background: none;
   box-shadow: none;
   border-radius: 0px;
 }
 
-.menu button:hover {
+.date-nav button:hover {
   background-color: #111;
 }
 
-.menu button:disabled {
+.date-nav button:disabled {
   color: darkgray;
 }

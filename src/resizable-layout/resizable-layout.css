@@ -1,0 +1,33 @@
+main {
+  background-color: #222;
+  color: whitesmoke;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.ro-output {
+  background-color: #333;
+  float: left;
+  height: 100%;
+}
+
+.band-list {
+  float: left;
+  position: relative;
+  height: 100%;
+}
+
+.band-list-content {
+  float: left;
+  position: relative;
+  height: 100%;
+}
+
+.handler {
+  width: 20px;
+  padding: 0;
+  cursor: ew-resize;
+  float: right;
+  height: 100%;
+}
