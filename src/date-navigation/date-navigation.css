@@ -1,15 +1,30 @@
-.date-nav {
-  overflow: hidden;
-}
-
 .date-nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
-.date-nav ul li {
+.date-nav li {
   float: left;
+}
+
+.date-nav button {
+  display: block;
+  color: white;
   text-align: center;
   padding: 10px;
+  text-decoration: none;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0px;
+}
+
+.date-nav button:hover {
+  background-color: #111;
+}
+
+.date-nav button:disabled {
+  color: darkgray;
 }

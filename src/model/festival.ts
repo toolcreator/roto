@@ -86,16 +86,4 @@ export class Festival {
   public notifySubscribersOfBandCategoriesChange(): void { this.changeSubscribers.forEach(listener => listener.onBandCategoriesChanged(this.bandCategories)); }
   private notifySubscribersOfAdapterChange(): void { this.changeSubscribers.forEach(listener => listener.onAdapterChanged(this.adapter)); }
   public notifySubscribersOfBandsChange(): void { this.changeSubscribers.forEach(listener => listener.onBandsChanged(this.bands)); }
-
-  public repairTree(): void {
-    this.bandCategories.forEach(bandCategory => {
-      bandCategory.parent = this;
-    });
-    this.bands.forEach(band => {
-      band.parent = this;
-      band.gigs.forEach(gig => {
-        gig.parent = band;
-      });
-    });
-  }
 }

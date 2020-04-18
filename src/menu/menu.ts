@@ -71,7 +71,7 @@ export function init(): void {
   });
 }
 
-export function setSettingsButtonDisabled(disabled: boolean) {
+export function setSettingsButtonDisabled(disabled: boolean): void {
   settingsButton.disabled = disabled;
 }
 
