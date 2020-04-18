@@ -1,4 +1,6 @@
 # roto
+![develop](https://github.com/toolcreator/roto/workflows/Node.js%20CI/badge.svg?branch=develop)
+
 Tool for creating personalized festival running orders.
 
 *To be continued*
