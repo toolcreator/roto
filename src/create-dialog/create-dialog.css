@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  background-color: #333;
+  color: whitesmoke;
+}
+label {
+  display: block;
+}
+form {
+  padding: 1em;
+}
+input {
+  width: 100%;
+  margin-bottom: 1em;
+  background-color: grey;
+  color: white;
+}
+select {
+  width: 100%;
+  background-color: grey;
+  color: white;
+}
+::placeholder {
+  color: white;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="submit"] {
+  margin-top: 2em;
+  display: block;
+}

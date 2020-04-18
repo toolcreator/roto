@@ -9,13 +9,28 @@
 
 <body>
   <div class="menu">
-    <script src="../dist/menu/menu.js"></script>
     <ul>
-      <li><button type="button" onclick="createFestival()"><i class="material-icons">add_circle_outline</i></button></li>
-      <li><button type="button" onclick="openFestival()"><i class="material-icons">folder_open</i></button></li>
-      <li><button type="button" onclick="printRunningOrder()"><i class="material-icons">print</i></button></li>
+      <li><button type="button" class="tooltip" id="createFestivalButton"><i class="material-icons">add_circle_outline</i><span class="tooltiptext">Create Festival</span></button></li>
+      <li><button type="button" class="tooltip" id="openFestivalButton"><i class="material-icons">folder_open</i><span class="tooltiptext">Open Festival</span></button></li>
+      <li><button type="button" class="tooltip" id="settingsButton"><i class="material-icons">settings</i><span class="tooltiptext">Settings</span></button></li>
+      <li><button type="button" class="tooltip" id="printRunningOrderButton"><i class="material-icons">print</i><span class="tooltiptext">Print Running Order</span></button></li>
     </ul>
   </div>
+  <main>
+    <section class="band-list">
+      <div class="band-list-content">
+        <h2>Bands</h2>
+      </div>
+      <div class="handler"></div>
+    </section>
+    <section class="ro-output">
+      <h2>Running Order</h2>
+      <div class="date-nav">
+        <ul></ul>
+      </div>
+    </section>
+  </main>
+  <script>require('../dist/renderer.js');</script>
 </body>
 
 </html>
