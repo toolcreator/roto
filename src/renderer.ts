@@ -1,15 +1,21 @@
 import { Festival } from './model/festival';
 import { BandCategory } from './model/band-category';
 import { Band } from './model/band';
+import { Gig } from './model/gig';
+import { DateNavigation } from './date-navigation/date-navigation';
 import { ipcRenderer } from 'electron';
 import * as Menu from './menu/menu';
 import * as ResizableLayout from './resizable-layout/resizeable-layout';
-import { Gig } from './model/gig';
 
 const festival = new Festival();
 
 Menu.init();
 ResizableLayout.init();
+
+const dateNav = DateNavigation.instance;
+dateNav.setSelectedDateChangedCallback(selectedDate => {
+  // TODO
+});
 
 ipcRenderer.on('festival-changed', (event, f) => {
   /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -30,6 +36,8 @@ ipcRenderer.on('festival-changed', (event, f) => {
     festival.bands.push(b);
   });
   /* eslint-enable @typescript-eslint/no-explicit-any */
+
+  dateNav.setDates(festival.startDate, festival.endDate);
 
   Menu.setSettingsButtonDisabled(false);
 });

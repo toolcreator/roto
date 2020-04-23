@@ -1,37 +1,38 @@
 export class DateNavigation {
-  private root: HTMLElement;
-  private dates = new Array<Date>();
-  private buttons = new Array<HTMLButtonElement>();
-  private _currentDate: Date;
-  private get currentDate(): Date {
-    return this._currentDate;
-  }
-  private set currentDate(currentDate: Date) {
-    this._currentDate = currentDate;
-  }
-  private get startDate(): Date {
-    if (this.dates.length > 0) {
-      return this.dates[0];
-    }
-    return undefined;
-  }
-  private get endDate(): Date {
-    if (this.dates.length > 0) {
-      return this.dates[this.dates.length - 1];
-    }
-    return undefined;
-  }
-
-  private constructor() {
-    this.root = document.getElementsByClassName('date-nav')[0] as HTMLElement;
-  }
-
   private static _instance: DateNavigation;
   public static get instance(): DateNavigation {
     if (!DateNavigation._instance) {
       DateNavigation._instance = new DateNavigation();
     }
     return DateNavigation._instance;
+  }
+
+  public setDates(startDate: Date, endDate: Date): void {
+    this.fillDates(startDate, endDate);
+  }
+
+  public setSelectedDateChangedCallback(cb: (selectedDate: Date) => void): void {
+    this.selectedDateChangedCallback = cb;
+  }
+
+  private root: HTMLElement;
+  private dates = new Array<Date>();
+  private buttons = new Array<HTMLButtonElement>();
+  private selectedDateChangedCallback: (selectedDate: Date) => void = undefined;
+  private _currentDate: Date;
+  private get currentDate(): Date {
+    return this._currentDate;
+  }
+  private set currentDate(currentDate: Date) {
+    this._currentDate = currentDate;
+    this.buildNav();
+    if(this.selectedDateChangedCallback) {
+      this.selectedDateChangedCallback(this._currentDate);
+    }
+  }
+
+  private constructor() {
+    this.root = document.getElementsByClassName('date-nav')[0] as HTMLElement;
   }
 
   private buildNav(): void {
