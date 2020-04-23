@@ -8,6 +8,7 @@
     "start": "npm run build && electron-forge start",
     "lint": "eslint --ext .ts .",
     "build": "tsc",
+    "build-debug": "ts-node-script src/build-config/build-debug.ts",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test"
   },
