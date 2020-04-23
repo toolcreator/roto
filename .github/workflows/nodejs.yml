@@ -29,8 +29,8 @@ jobs:
     - run: npm run build --if-present
       name: Build
 
-    #- run: npm test
-    #  name: test
+    - run: npm test
+      name: Test
 
       env:
         CI: true
