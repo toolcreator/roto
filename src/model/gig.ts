@@ -1,12 +1,10 @@
 import { Field, DateClass } from "sparkson";
-import { Band } from "./band";
 
 export class Gig {
   constructor(
     @Field('stage') private _stage: string,
     @Field('start') private _start: DateClass,
-    @Field('end') private _end: DateClass,
-    public parent: Band
+    @Field('end') private _end: DateClass
   ) { /* empty */ }
 
   get stage(): string {
@@ -14,7 +12,6 @@ export class Gig {
   }
   set stage(stage: string) {
     this._stage = stage;
-    this.parent.parent.notifySubscribersOfBandsChange();
   }
 
   get start(): Date {
@@ -22,7 +19,6 @@ export class Gig {
   }
   set start(start: Date) {
     this._start = start;
-    this.parent.parent.notifySubscribersOfBandsChange();
   }
 
   get end(): Date {
@@ -30,6 +26,5 @@ export class Gig {
   }
   set end(end: Date) {
     this._end = end;
-    this.parent.parent.notifySubscribersOfBandsChange();
   }
 }

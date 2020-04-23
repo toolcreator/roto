@@ -1,4 +1,3 @@
-import { Festival } from './festival';
 import { Gig } from './gig';
 import { Field, ArrayField } from 'sparkson';
 
@@ -6,8 +5,7 @@ export class Band {
   constructor(
     @Field('name') private _name: string,
     @Field('category') private _category: string,
-    @ArrayField('gigs', Gig) private _gigs: Gig[],
-    public parent: Festival
+    @ArrayField('gigs', Gig) private _gigs: Gig[]
   ) { /* empty */ }
 
   get name(): string {
@@ -15,7 +13,6 @@ export class Band {
   }
   set name(name: string) {
     this._name = name;
-    this.parent.notifySubscribersOfBandsChange();
   }
 
   get category(): string {
@@ -23,7 +20,6 @@ export class Band {
   }
   set category(category: string) {
     this._category = category;
-    this.parent.notifySubscribersOfBandsChange();
   }
 
   get gigs(): Gig[] {
@@ -31,6 +27,5 @@ export class Band {
   }
   set gigs(gigs: Gig[]) {
     this._gigs = gigs;
-    this.parent.notifySubscribersOfBandsChange();
   }
 }

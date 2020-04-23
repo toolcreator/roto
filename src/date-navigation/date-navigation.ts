@@ -1,6 +1,4 @@
-import { FestivalChangeSubscriber } from '../model/festival';
-
-export class DateNavigation implements FestivalChangeSubscriber {
+export class DateNavigation {
   private root: HTMLElement;
   private dates = new Array<Date>();
   private buttons = new Array<HTMLButtonElement>();
@@ -10,7 +8,6 @@ export class DateNavigation implements FestivalChangeSubscriber {
   }
   private set currentDate(currentDate: Date) {
     this._currentDate = currentDate;
-    this.onCurrentDateChanged();
   }
   private get startDate(): Date {
     if (this.dates.length > 0) {
@@ -76,26 +73,6 @@ export class DateNavigation implements FestivalChangeSubscriber {
     }
     this.buildNav();
   }
-
-  private onCurrentDateChanged(): void {
-    this.buildNav();
-    // TODO
-  }
-
-  public onStartDateChanged(startDate: Date): void {
-    this.dates.unshift(startDate);
-    this.fillDates(startDate, this.endDate);
-  }
-
-  public onEndDateChanged(endDate: Date): void {
-    this.dates.push(endDate);
-    this.fillDates(this.startDate, endDate);
-  }
-
-  public onNameChanged(): void { /* empty */ }
-  public onBandCategoriesChanged(): void { /* empty */ }
-  public onAdapterChanged(): void { /* empty */ }
-  public onBandsChanged(): void { /* empty */ }
 
   // https://stackoverflow.com/a/12550320
   private pad(n: number): string {
