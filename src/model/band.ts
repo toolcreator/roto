@@ -1,11 +1,10 @@
 import { Gig } from './gig';
-import { Field, ArrayField } from 'sparkson';
 
 export class Band {
   constructor(
-    @Field('name') private _name: string,
-    @Field('category') private _category: string,
-    @ArrayField('gigs', Gig) private _gigs: Gig[]
+    private _name: string,
+    private _category: string,
+    private _gigs: Gig[]
   ) { /* empty */ }
 
   get name(): string {

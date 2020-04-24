@@ -1,10 +1,8 @@
-import { Field, DateClass } from "sparkson";
-
 export class Gig {
   constructor(
-    @Field('stage') private _stage: string,
-    @Field('start') private _start: DateClass,
-    @Field('end') private _end: DateClass
+    private _stage: string,
+    private _start: Date,
+    private _end: Date
   ) { /* empty */ }
 
   get stage(): string {

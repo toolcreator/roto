@@ -1,9 +1,7 @@
-import { Field } from 'sparkson';
-
 export class BandCategory {
   constructor(
-    @Field('name') private _name: string,
-    @Field('color') private _color: string
+    private _name: string,
+    private _color: string
   ) { /* empty */ }
 
   get name(): string {

@@ -1,16 +1,15 @@
 import { Band } from './band';
 import { BandCategory } from './band-category';
 import { FestivalAdapters } from '../adapters/festival-adapters';
-import { Field, ArrayField, DateClass } from 'sparkson';
 
 export class Festival {
   constructor(
-    @Field('name') private _name?: string,
-    @Field('startDate') private _startDate?: DateClass,
-    @Field('endDate') private _endDate?: DateClass,
-    @ArrayField('bandCategories', BandCategory) private _bandCategories?: BandCategory[],
-    @Field('adapter') private _adapter?: FestivalAdapters,
-    @ArrayField('bands', Band) private _bands?: Band[]
+    private _name?: string,
+    private _startDate?: Date,
+    private _endDate?: Date,
+    private _bandCategories?: BandCategory[],
+    private _adapter?: FestivalAdapters,
+    private _bands?: Band[]
   ) { /* empty */ }
 
   get name(): string {
