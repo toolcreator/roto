@@ -45,6 +45,7 @@ ipcRenderer.on('festival-changed', (event, f) => {
       "message": (err as Error).message,
       "type": "error"
     });
+    return;
   }
 
   Menu.setSettingsButtonDisabled(false);
