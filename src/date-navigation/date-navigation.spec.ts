@@ -1,7 +1,6 @@
 import 'mocha'
 import { expect, assert } from 'chai';
-import jsdomGlobal = require('jsdom-global');
-import * as fs from 'fs';
+import { jsdomGlobalFromFile } from '../test-util';
 import { DateNavigation } from './date-navigation';
 
 
@@ -21,11 +20,8 @@ describe('Date navigation bar', () => {
     endDate = END_DATE;
     numDays = NUM_DAYS;
 
-    jsdomGlobal(fs.readFileSync('src/index.html'), {
-      "includeNodeLocations": true,
-      "resources": "usable",
-      "runScripts": "outside-only"
-    });
+    jsdomGlobalFromFile('src/index.html');
+
     /* eslint-disable @typescript-eslint/ban-ts-ignore */
     // @ts-ignore
     DateNavigation._instance = null;

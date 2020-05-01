@@ -1,5 +1,3 @@
-import { remote } from 'electron';
-
 export function init(): void {
   const handler = document.querySelector('.handler') as HTMLElement;
   const wrapper = handler.closest('main');
@@ -61,7 +59,7 @@ export function init(): void {
     if (!isHandlerDragging) {
       return false;
     }
-    const windowWidth = remote.getCurrentWindow().getSize()[0];
+    const windowWidth = window.innerWidth;
     const pxDiff = e.clientX - lastMouseX;
     lastMouseX = e.clientX;
     const percDiff = 100 * pxDiff / windowWidth;
