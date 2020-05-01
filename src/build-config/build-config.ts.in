@@ -1,0 +1,13 @@
+interface BuildConfig {
+  readonly debug: boolean;
+}
+
+#ifdef DEBUG
+export const BUILD_CONFIG: BuildConfig = {
+  debug: true
+};
+#else
+export const BUILD_CONFIG: BuildConfig = {
+  debug: false
+};
+#endif

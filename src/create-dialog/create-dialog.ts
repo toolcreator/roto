@@ -16,7 +16,7 @@ function submit(): void {
   const startDate = (document.getElementById('startDate') as HTMLInputElement).valueAsDate;
   const endDate = (document.getElementById('endDate') as HTMLInputElement).valueAsDate;
   const bandCategories = (document.getElementById('bandCategories') as HTMLInputElement).value.split(',').map(
-    category => new BandCategory(category.trim(), undefined, undefined)
+    category => new BandCategory(category.trim(), undefined)
   );
   const festivalAdapter = FESTIVAL_ADAPTER_NAMES.get((document.getElementById('festivalAdapter') as HTMLInputElement).value);
 

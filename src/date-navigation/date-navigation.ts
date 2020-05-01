@@ -1,40 +1,37 @@
-import { FestivalChangeSubscriber } from '../model/festival';
-
-export class DateNavigation implements FestivalChangeSubscriber {
-  private root: HTMLElement;
-  private dates = new Array<Date>();
-  private buttons = new Array<HTMLButtonElement>();
-  private _currentDate: Date;
-  private get currentDate(): Date {
-    return this._currentDate;
-  }
-  private set currentDate(currentDate: Date) {
-    this._currentDate = currentDate;
-    this.onCurrentDateChanged();
-  }
-  private get startDate(): Date {
-    if (this.dates.length > 0) {
-      return this.dates[0];
-    }
-    return undefined;
-  }
-  private get endDate(): Date {
-    if (this.dates.length > 0) {
-      return this.dates[this.dates.length - 1];
-    }
-    return undefined;
-  }
-
-  private constructor() {
-    this.root = document.getElementsByClassName('date-nav')[0] as HTMLElement;
-  }
-
+export class DateNavigation {
   private static _instance: DateNavigation;
   public static get instance(): DateNavigation {
     if (!DateNavigation._instance) {
       DateNavigation._instance = new DateNavigation();
     }
     return DateNavigation._instance;
+  }
+
+  public setDates(startDate: Date, endDate: Date): void {
+    this.fillDates(startDate, endDate);
+  }
+
+  public setSelectedDateChangedCallback(cb: (selectedDate: Date) => void): void {
+    this.selectedDateChangedCallback = cb;
+  }
+
+  private root: HTMLElement;
+  private dates = new Array<Date>();
+  private buttons = new Array<HTMLButtonElement>();
+  private selectedDateChangedCallback: (selectedDate: Date) => void = undefined;
+  private _currentDate: Date;
+  private get currentDate(): Date {
+    return this._currentDate;
+  }
+  private set currentDate(currentDate: Date) {
+    this._currentDate = currentDate;
+    if(this.selectedDateChangedCallback) {
+      this.selectedDateChangedCallback(this._currentDate);
+    }
+  }
+
+  private constructor() {
+    this.root = document.getElementsByClassName('date-nav')[0] as HTMLElement;
   }
 
   private buildNav(): void {
@@ -67,35 +64,18 @@ export class DateNavigation implements FestivalChangeSubscriber {
   }
 
   private fillDates(startDate: Date, endDate: Date): void {
+    if(endDate < startDate) {
+      throw new Error('End date cannot be before start date');
+    }
     this.dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       this.dates.push(new Date(d));
     }
-    if (!this.dates.includes(this.currentDate)) {
+    if (!this.currentDate || !this.dates.some(date => date.getTime() == this.currentDate.getTime())) {
       this.currentDate = startDate;
     }
     this.buildNav();
   }
-
-  private onCurrentDateChanged(): void {
-    this.buildNav();
-    // TODO
-  }
-
-  public onStartDateChanged(startDate: Date): void {
-    this.dates.unshift(startDate);
-    this.fillDates(startDate, this.endDate);
-  }
-
-  public onEndDateChanged(endDate: Date): void {
-    this.dates.push(endDate);
-    this.fillDates(this.startDate, endDate);
-  }
-
-  public onNameChanged(): void { /* empty */ }
-  public onBandCategoriesChanged(): void { /* empty */ }
-  public onAdapterChanged(): void { /* empty */ }
-  public onBandsChanged(): void { /* empty */ }
 
   // https://stackoverflow.com/a/12550320
   private pad(n: number): string {

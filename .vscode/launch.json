@@ -15,7 +15,7 @@
       },
       "args" : ["."],
       "outputCapture": "std",
-      "preLaunchTask": "tsc: build - tsconfig.json"
+      "preLaunchTask": "npm: build-debug"
     }
   ]
 }
