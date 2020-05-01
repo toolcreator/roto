@@ -1,5 +1,5 @@
 # roto
-![lint-build-test](https://github.com/toolcreator/roto/workflows/lint-build-test/badge.svg?branch=master)
+![tests](https://github.com/toolcreator/roto/workflows/tests/badge.svg?branch=master)
 
 Tool for creating personalized festival running orders.
 
