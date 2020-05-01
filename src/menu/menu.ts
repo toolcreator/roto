@@ -1,6 +1,4 @@
-import { Festival } from '../model/festival';
 import { remote, ipcRenderer } from 'electron';
-import { parse } from 'sparkson';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -35,16 +33,13 @@ function openFestival(): void {
       remote.dialog.showErrorBox('Could not open file.', (err as Error).message);
       return;
     }
-    let festival: Festival;
     try {
-      // festival = parse(Festival, JSON.parse(fileContent)); // TODO "No mapper defined for types Festival and object"
-      festival = JSON.parse(fileContent);
+      const festival = JSON.parse(fileContent);
+      remote.getCurrentWebContents().send('festival-changed', festival);
     } catch (err) {
       remote.dialog.showErrorBox('Could not parse festival file', (err as Error).message);
       return;
     }
-
-    remote.getCurrentWebContents().send('festival-changed', festival);
   }
 }
 

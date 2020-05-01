@@ -1,4 +1,5 @@
 import { app, BrowserWindow, Menu } from 'electron';
+import { BUILD_CONFIG } from './build-config/build-config';
 import * as path from 'path';
 
 Menu.setApplicationMenu(null)
@@ -21,8 +22,10 @@ const createWindow = (): void => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  if(BUILD_CONFIG.debug) {
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished
