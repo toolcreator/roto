@@ -22,7 +22,7 @@ const createWindow = (): void => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
 
-  if(BUILD_CONFIG.DEBUG) {
+  if(BUILD_CONFIG.debug) {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
   }
