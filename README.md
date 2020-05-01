@@ -1,5 +1,5 @@
 # roto
-![Node.js CI](https://github.com/toolcreator/roto/workflows/Node.js%20CI/badge.svg?branch=develop)
+![lint-build-test](https://github.com/toolcreator/roto/workflows/lint-build-test/badge.svg?branch=master)
 
 Tool for creating personalized festival running orders.
 

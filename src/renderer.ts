@@ -3,7 +3,7 @@ import { BandCategory } from './model/band-category';
 import { Band } from './model/band';
 import { Gig } from './model/gig';
 import { DateNavigation } from './date-navigation/date-navigation';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import * as Menu from './menu/menu';
 import * as ResizableLayout from './resizable-layout/resizeable-layout';
 
@@ -37,7 +37,15 @@ ipcRenderer.on('festival-changed', (event, f) => {
   });
   /* eslint-enable @typescript-eslint/no-explicit-any */
 
-  dateNav.setDates(festival.startDate, festival.endDate);
+  try {
+    dateNav.setDates(festival.startDate, festival.endDate);
+  } catch(err) {
+    remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+      "title": (err as Error).name,
+      "message": (err as Error).message,
+      "type": "error"
+    });
+  }
 
   Menu.setSettingsButtonDisabled(false);
 });

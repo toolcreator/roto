@@ -6,15 +6,14 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "npm run build && electron-forge start",
-    "prebuild": "cd src/build-config && c-preprocessor build-config.ts.in build-config.ts",
+    "prebuild": "npm run clean; cd src/build-config && c-preprocessor build-config.ts.in build-config.ts",
     "build": "tsc",
-    "postbuild": "rimraf src/build-config/build-config.ts",
     "prebuild-debug": "cd src/build-config && c-preprocessor --config debug-config.json build-config.ts.in build-config.ts",
     "build-debug": "tsc",
-    "postbuild-debug": "npm run postbuild",
     "lint": "eslint --ext .ts .",
+    "pretest": "npm run build",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
-    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test"
+    "clean": "rimraf dist"
   },
   "keywords": [],
   "author": {
@@ -36,6 +35,7 @@
     "@electron-forge/cli": "^6.0.0-beta.50",
     "@types/chai": "^4.2.11",
     "@types/jsdom": "^16.2.1",
+    "@types/jsdom-global": "^3.0.2",
     "@types/mocha": "^7.0.2",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
@@ -45,8 +45,8 @@
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.2",
     "jsdom": "^16.2.2",
+    "jsdom-global": "^3.0.2",
     "mocha": "^7.1.1",
-    "nyc": "^15.0.1",
     "rimraf": "^3.0.2",
     "ts-node": "^8.8.2",
     "typescript": "^3.8.3"

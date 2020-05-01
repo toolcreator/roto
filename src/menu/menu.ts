@@ -1,4 +1,3 @@
-import { Festival } from '../model/festival';
 import { remote, ipcRenderer } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';

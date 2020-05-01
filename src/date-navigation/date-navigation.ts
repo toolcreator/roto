@@ -25,7 +25,6 @@ export class DateNavigation {
   }
   private set currentDate(currentDate: Date) {
     this._currentDate = currentDate;
-    this.buildNav();
     if(this.selectedDateChangedCallback) {
       this.selectedDateChangedCallback(this._currentDate);
     }
@@ -65,11 +64,14 @@ export class DateNavigation {
   }
 
   private fillDates(startDate: Date, endDate: Date): void {
+    if(endDate < startDate) {
+      throw new Error('End date cannot be before start date');
+    }
     this.dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       this.dates.push(new Date(d));
     }
-    if (!this.dates.includes(this.currentDate)) {
+    if (!this.currentDate || !this.dates.some(date => date.getTime() == this.currentDate.getTime())) {
       this.currentDate = startDate;
     }
     this.buildNav();
