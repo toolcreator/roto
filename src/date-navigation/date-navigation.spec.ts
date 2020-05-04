@@ -15,7 +15,7 @@ describe('Date navigation bar', () => {
   let endDate: Date;
   let numDays: number;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     startDate = START_DATE;
     endDate = END_DATE;
     numDays = NUM_DAYS;
