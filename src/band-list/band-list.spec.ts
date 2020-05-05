@@ -1,5 +1,5 @@
 import 'mocha'
-import { expect, assert } from 'chai';
+import { expect } from 'chai';
 import { jsdomGlobalFromFile } from '../test-util';
 import { BandList } from './band-list';
 import { Band } from '../model/band';
@@ -14,15 +14,17 @@ describe('Band list', () => {
   const bands = [
     new Band("Nice Band", "must-see", []),
     new Band("Nope Band", "nope", []),
-    new Band("Band Nope", "nope", [])
+    new Band("Band Nope", "nope", []),
+    new Band("Some Band", "", [])
   ];
 
   let findBandLi: (bandName: string) => HTMLLIElement;
   let findBandCategory: (bandName: string) => string;
 
   const numBandsPerCategory: { [category: string]: number } = {
-    "must-see": bands.filter(band => band.category == "nice").length,
-    "nope": bands.filter(band => band.category == "nope").length
+    "must-see": bands.filter(band => band.category == "must-see").length,
+    "nope": bands.filter(band => band.category == "nope").length,
+    "": bands.filter(band => band.category == "").length
   };
 
   beforeEach(() => {
@@ -59,7 +61,7 @@ describe('Band list', () => {
     BandList.instance.setBands(bands);
 
     const bandListElem = getBandListElem();
-    expect(bandListElem.children.length).to.equal(bandCategories.length);
+    expect(bandListElem.children.length).to.equal(bandCategories.length + 1);
 
     for (let c = 0; c < bandListElem.children.length; ++c) {
       const categoryUl = bandListElem.children[c];
@@ -68,7 +70,7 @@ describe('Band list', () => {
 
       const headerLi = categoryUl.children[0];
       expect(headerLi.tagName).to.equal("LI");
-      expect(headerLi.innerHTML).to.equal(bandCategories[c].name);
+      expect(headerLi.innerHTML).to.equal(c < bandCategories.length ? bandCategories[c].name : "?");
 
       const bandsLi = categoryUl.children[1];
       expect(bandsLi.tagName).to.equal("LI");
@@ -76,7 +78,8 @@ describe('Band list', () => {
 
       const bandsUl = bandsLi.children[0];
       expect(bandsUl.tagName).to.equal("UL");
-      expect(bandsUl.children.length).to.equal(numBandsPerCategory[bandCategories[c].name]);
+      const numBands = numBandsPerCategory[c < bandCategories.length ? bandCategories[c].name : ""];
+      expect(bandsUl.children.length).to.equal(numBands);
 
       for (const bandLi of bandsUl.children) {
         expect(bandLi.tagName).to.equal("LI");
@@ -148,7 +151,7 @@ describe('Band list', () => {
   it('adds a band and calls back if it should', () => {
     const bandList = BandList.instance;
 
-    const names = ["Cool New Band", "Another New Band"];
+    const names = ["New Band", "Another New Band"];
     const categories = ["must-see", "nope"];
     expect(names.length).to.be.greaterThan(1);
     expect(categories.length).to.be.greaterThan(1);

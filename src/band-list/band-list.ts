@@ -16,11 +16,36 @@ export class BandList {
   }
 
   public setBands(bands: Band[]): void {
-    // TODO
+    while(this.root.firstChild) {
+      this.root.removeChild(this.root.firstChild);
+    }
+
+    for(const category of this.bandCategories) {
+      const categoryUl = document.createElement("ul");
+      const categoryNameLi = document.createElement("li");
+      categoryNameLi.innerHTML = category.name != "" ? category.name : "?";
+      categoryUl.appendChild(categoryNameLi);
+      const bandListLi = document.createElement("li");
+      const bandListUl = document.createElement("ul");
+      for(const band of bands) {
+        if(band.category == category.name) {
+          const bandLi = document.createElement("li");
+          bandLi.innerHTML = band.name;
+          bandListUl.appendChild(bandLi);
+        }
+      }
+      bandListLi.appendChild(bandListUl);
+      categoryUl.appendChild(bandListLi);
+      this.root.appendChild(categoryUl);
+    }
   }
 
   public setBandCategories(bandCategories: BandCategory[]): void {
-    this.bandCategories = bandCategories;
+    this.bandCategories = [];
+    for(const bandCategory of bandCategories) {
+      this.bandCategories.push(bandCategory);
+    }
+    this.bandCategories.push(new BandCategory("", "inherit"));
     // TODO
   }
 
