@@ -90,4 +90,14 @@ export class BandList {
     }
     return null;
   };
+
+  private findBandCategory = (bandName: string): string => {
+    try {
+    const bandElement = this.findBandElement(bandName);
+    const categoryLi = bandElement.parentElement.parentElement.previousSibling as HTMLElement;
+    return categoryLi.innerHTML;
+    } catch(err) {
+      return "";
+    }
+  }
 }

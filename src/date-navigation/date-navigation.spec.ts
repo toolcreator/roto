@@ -40,6 +40,7 @@ describe('Date navigation bar', () => {
     const dateNav = getDateNavElem();
     const children = dateNav.children;
     expect(children.length).to.equal(1);
+
     const ul = children[0];
     expect(ul.tagName).to.equal('UL');
   });
@@ -88,7 +89,7 @@ describe('Date navigation bar', () => {
   it('does not accept an end date earlier than start date',() => {
     expect(() => DateNavigation.instance.setDates(endDate, startDate)).to.throw();
   })
-  
+
   it('disables the current day button and enables the others', () => {
     DateNavigation.instance.setDates(startDate, endDate);
     const ul = getUListElem();
