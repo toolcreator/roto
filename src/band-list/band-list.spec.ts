@@ -105,7 +105,7 @@ describe('Band list', () => {
       cbCalled = true;
     });
 
-    bandList.changeBandName(oldName, newName);
+    bandList.changeBandName(oldName, newName, true);
     expect(cbCalled).to.equal(true);
     cbCalled = false;
     expect(toChangeLi.innerHTML).to.equal(newName);
@@ -138,7 +138,7 @@ describe('Band list', () => {
       cbCalled = true;
     });
 
-    bandList.changeBandCategory(bandName, newCategory);
+    bandList.changeBandCategory(bandName, newCategory, true);
     expect(cbCalled).to.equal(true);
     cbCalled = false;
     expect(findBandCategory(bandName)).to.equal(newCategory);
@@ -150,6 +150,7 @@ describe('Band list', () => {
 
   it('adds a band and calls back if it should', () => {
     const bandList = BandList.instance;
+    bandList.setBandCategories(bandCategories);
 
     const names = ["New Band", "Another New Band"];
     const categories = ["must-see", "nope"];
@@ -162,7 +163,7 @@ describe('Band list', () => {
     })
 
     expect(findBandLi(names[0])).to.equal(null);
-    bandList.addBand(new Band(names[0], categories[0], []));
+    bandList.addBand(new Band(names[0], categories[0], []), true);
     expect(cbCalled).to.equal(true);
     cbCalled = false;
     const bandLi0 = findBandLi(names[0]);
@@ -174,6 +175,7 @@ describe('Band list', () => {
     bandList.addBand(new Band(names[1], categories[1], []), false);
     expect(cbCalled).to.equal(false);
     const bandLi1 = findBandLi(names[1]);
+    expect(findBandLi(names[0])).to.not.equal(null);
     expect(bandLi1).to.not.equal(null);
     expect(bandLi1.innerHTML).to.equal(names[1]);
     expect(findBandCategory(names[1])).to.equal(categories[1]);
@@ -191,19 +193,22 @@ describe('Band list', () => {
 
     expect(bands.length).to.be.greaterThan(1);
 
-    const bandLi0 = findBandLi(bands[0].name);
+    const name0 = bands[0].name;
+    const name1 = bands[1].name;
+
+    const bandLi0 = findBandLi(name0);
     expect(bandLi0).to.not.equal(null);
-    expect(bandLi0.innerHTML).to.equal(bands[0].name);
-    bandList.removeBand(bands[0].name);
+    expect(bandLi0.innerHTML).to.equal(name0);
+    bandList.removeBand(name0, true);
     expect(cbCalled).to.equal(true);
     cbCalled = false;
-    expect(findBandLi(bands[0].name)).to.equal(null);
+    expect(findBandLi(name0)).to.equal(null);
 
-    const bandLi1 = findBandLi(bands[1].name);
+    const bandLi1 = findBandLi(name1);
     expect(bandLi1).to.not.equal(null);
-    expect(bandLi1.innerHTML).to.equal(bands[1].name);
-    bandList.removeBand(bands[1].name, false);
+    expect(bandLi1.innerHTML).to.equal(name1);
+    bandList.removeBand(name1, false);
     expect(cbCalled).to.equal(false);
-    expect(findBandLi(bands[1].name)).to.equal(null);
+    expect(findBandLi(name1)).to.equal(null);
   });
 });

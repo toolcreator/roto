@@ -16,63 +16,75 @@ export class BandList {
   }
 
   public setBands(bands: Band[]): void {
-    while(this.root.firstChild) {
-      this.root.removeChild(this.root.firstChild);
-    }
-
-    for(const category of this.bandCategories) {
-      const categoryUl = document.createElement("ul");
-      const categoryNameLi = document.createElement("li");
-      categoryNameLi.innerHTML = category.name != "" ? category.name : "?";
-      categoryUl.appendChild(categoryNameLi);
-      const bandListLi = document.createElement("li");
-      const bandListUl = document.createElement("ul");
-      for(const band of bands) {
-        if(band.category == category.name) {
-          const bandLi = document.createElement("li");
-          bandLi.innerHTML = band.name;
-          bandListUl.appendChild(bandLi);
-        }
-      }
-      bandListLi.appendChild(bandListUl);
-      categoryUl.appendChild(bandListLi);
-      this.root.appendChild(categoryUl);
-    }
+    this.bands = bands;
+    this.buildList();
   }
 
   public setBandCategories(bandCategories: BandCategory[]): void {
     this.bandCategories = [];
-    for(const bandCategory of bandCategories) {
+    for (const bandCategory of bandCategories) {
       this.bandCategories.push(bandCategory);
     }
     this.bandCategories.push(new BandCategory("", "inherit"));
-    // TODO
+    this.buildList();
   }
 
-  public changeBandName(oldName: string, newName: string, callback = true): void {
-    // TODO
-    if(callback && this.onBandNameChangedCb) {
+  public changeBandName(oldName: string, newName: string, callback = false): void {
+    const band = this.bands.find(band => band.name == oldName);
+    if (band) {
+      band.name = newName;
+    }
+
+    const bandLi = this.findBandElement(oldName);
+    if (bandLi) {
+      bandLi.innerHTML = newName;
+    }
+
+    if (callback && this.onBandNameChangedCb) {
       this.onBandNameChangedCb(oldName, newName);
     }
   }
 
-  public changeBandCategory(bandName: string, newCategory: string, callback = true): void {
-    // TODO
-    if(callback && this.onBandCategoryChangedCb) {
+  public changeBandCategory(bandName: string, newCategory: string, callback = false): void {
+    const band = this.bands.find(band => band.name == bandName);
+    if (band) {
+      band.category = newCategory;
+    }
+
+    this.buildList();
+
+    if (callback && this.onBandCategoryChangedCb) {
       this.onBandCategoryChangedCb(bandName, newCategory);
     }
   }
 
-  public addBand(band: Band, callback = true): void {
-    // TODO
-    if(callback && this.onBandAddedCb) {
+  public addBand(band: Band, callback = false): void {
+    if (!this.bands.some(b => b == band)) {
+      this.bands.push(band);
+    }
+
+    this.buildList();
+
+    if (callback && this.onBandAddedCb) {
       this.onBandAddedCb(band.name, band.category);
     }
   }
 
-  public removeBand(bandName: string, callback = true): void {
-    // TODO
-    if(callback && this.onBandRemovedCb) {
+  public removeBand(bandName: string, callback = false): void {
+    const band = this.bands.find(band => band.name == bandName);
+    if (band) {
+      const idx = this.bands.indexOf(band);
+      if (idx > -1) {
+        this.bands.splice(idx, 1);
+      }
+    }
+
+    const bandLi = this.findBandElement(band.name);
+    if (bandLi) {
+      bandLi.parentElement.removeChild(bandLi);
+    }
+
+    if (callback && this.onBandRemovedCb) {
       this.onBandRemovedCb(bandName);
     }
   }
@@ -94,7 +106,8 @@ export class BandList {
   }
 
   private root: HTMLElement;
-  private bandCategories: BandCategory[] = new Array<BandCategory>();
+  private bandCategories = new Array<BandCategory>();
+  private bands = new Array<Band>();
   private onBandNameChangedCb: onBandNameChangedCallback;
   private onBandCategoryChangedCb: onBandCategoryChangedCallback;
   private onBandAddedCb: onBandAddedCallback;
@@ -104,11 +117,36 @@ export class BandList {
     this.root = document.getElementsByClassName('band-list-content')[0] as HTMLElement;
   }
 
+  private buildList(): void {
+    while (this.root.firstChild) {
+      this.root.removeChild(this.root.firstChild);
+    }
+
+    for (const category of this.bandCategories) {
+      const categoryUl = document.createElement("ul");
+      const categoryNameLi = document.createElement("li");
+      categoryNameLi.innerHTML = category.name != "" ? category.name : "?";
+      categoryUl.appendChild(categoryNameLi);
+      const bandListLi = document.createElement("li");
+      const bandListUl = document.createElement("ul");
+      for (const band of this.bands) {
+        if (band.category == category.name) {
+          const bandLi = document.createElement("li");
+          bandLi.innerHTML = band.name;
+          bandListUl.appendChild(bandLi);
+        }
+      }
+      bandListLi.appendChild(bandListUl);
+      categoryUl.appendChild(bandListLi);
+      this.root.appendChild(categoryUl);
+    }
+  }
+
   private findBandElement = (bandName: string): HTMLLIElement => {
-    for(const categoryUl of this.root.children) {
+    for (const categoryUl of this.root.children) {
       const bandsUl = categoryUl.children[1].children[0];
-      for(const bandLi of bandsUl.children) {
-        if(bandLi.innerHTML == bandName) {
+      for (const bandLi of bandsUl.children) {
+        if (bandLi.innerHTML == bandName) {
           return bandLi as HTMLLIElement;
         }
       }
@@ -118,10 +156,10 @@ export class BandList {
 
   private findBandCategory = (bandName: string): string => {
     try {
-    const bandElement = this.findBandElement(bandName);
-    const categoryLi = bandElement.parentElement.parentElement.previousSibling as HTMLElement;
-    return categoryLi.innerHTML;
-    } catch(err) {
+      const bandElement = this.findBandElement(bandName);
+      const categoryLi = bandElement.parentElement.parentElement.previousSibling as HTMLElement;
+      return categoryLi.innerHTML;
+    } catch (err) {
       return "";
     }
   }
