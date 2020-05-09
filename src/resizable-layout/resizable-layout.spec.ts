@@ -1,5 +1,5 @@
 import 'mocha'
-import { expect, assert } from 'chai';
+import { expect } from 'chai';
 import { jsdomGlobalFromFile } from '../test-util';
 import * as ResizableLayout from './resizeable-layout';
 

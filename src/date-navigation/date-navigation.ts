@@ -1,3 +1,5 @@
+export interface OnSelectedDateChangedCallback { (selectedDate: Date): void}
+
 export class DateNavigation {
   private static _instance: DateNavigation;
   public static get instance(): DateNavigation {
@@ -11,14 +13,14 @@ export class DateNavigation {
     this.fillDates(startDate, endDate);
   }
 
-  public setSelectedDateChangedCallback(cb: (selectedDate: Date) => void): void {
+  public setSelectedDateChangedCallback(cb: OnSelectedDateChangedCallback): void {
     this.selectedDateChangedCallback = cb;
   }
 
   private root: HTMLElement;
   private dates = new Array<Date>();
   private buttons = new Array<HTMLButtonElement>();
-  private selectedDateChangedCallback: (selectedDate: Date) => void = undefined;
+  private selectedDateChangedCallback: OnSelectedDateChangedCallback;
   private _currentDate: Date;
   private get currentDate(): Date {
     return this._currentDate;
