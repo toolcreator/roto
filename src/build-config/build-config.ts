@@ -3,6 +3,6 @@ interface BuildConfig {
 }
 
 export const BUILD_CONFIG: BuildConfig = {
-  debug: true
+  debug: false
 };
 

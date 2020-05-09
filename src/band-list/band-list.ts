@@ -1,10 +1,10 @@
 import { BandCategory } from '../model/band-category';
 import { Band } from '../model/band';
 
-export interface onBandNameChangedCallback { (oldName: string, newName: string): void };
-export interface onBandCategoryChangedCallback { (bandName: string, newCategory: string): void };
-export interface onBandAddedCallback { (bandName: string, bandCategory: string): void };
-export interface onBandRemovedCallback { (bandName: string): void };
+export interface OnBandNameChangedCallback { (oldName: string, newName: string): void }
+export interface OnBandCategoryChangedCallback { (bandName: string, newCategory: string): void }
+export interface OnBandAddedCallback { (bandName: string, bandCategory: string): void }
+export interface OnBandRemovedCallback { (bandName: string): void }
 
 export class BandList {
   private static _instance: BandList;
@@ -89,29 +89,29 @@ export class BandList {
     }
   }
 
-  public setOnBandNameChangedCallback(cb: onBandNameChangedCallback): void {
+  public setOnBandNameChangedCallback(cb: OnBandNameChangedCallback): void {
     this.onBandNameChangedCb = cb;
   }
 
-  public setOnBandCategoryChangedCallback(cb: onBandCategoryChangedCallback): void {
+  public setOnBandCategoryChangedCallback(cb: OnBandCategoryChangedCallback): void {
     this.onBandCategoryChangedCb = cb;
   }
 
-  public setOnBandAddedCallback(cb: onBandAddedCallback): void {
+  public setOnBandAddedCallback(cb: OnBandAddedCallback): void {
     this.onBandAddedCb = cb;
   }
 
-  public setOnBandRemovedCallback(cb: onBandRemovedCallback): void {
+  public setOnBandRemovedCallback(cb: OnBandRemovedCallback): void {
     this.onBandRemovedCb = cb;
   }
 
   private root: HTMLElement;
   private bandCategories = new Array<BandCategory>();
   private bands = new Array<Band>();
-  private onBandNameChangedCb: onBandNameChangedCallback;
-  private onBandCategoryChangedCb: onBandCategoryChangedCallback;
-  private onBandAddedCb: onBandAddedCallback;
-  private onBandRemovedCb: onBandRemovedCallback;
+  private onBandNameChangedCb: OnBandNameChangedCallback;
+  private onBandCategoryChangedCb: OnBandCategoryChangedCallback;
+  private onBandAddedCb: OnBandAddedCallback;
+  private onBandRemovedCb: OnBandRemovedCallback;
 
   private constructor() {
     this.root = document.getElementsByClassName('band-list-content')[0] as HTMLElement;
