@@ -20,11 +20,11 @@ jobs:
     - name: Install
       run: npm ci
 
-    - name: Lint
-      run: npm run lint --if-present
-
     - name: Build
       run: npm run build
+
+    - name: Lint
+      run: npm run lint --if-present
 
       env:
         CI: true
