@@ -13,7 +13,7 @@
     "lint": "eslint --ext .ts .",
     "pretest": "npm run build",
     "test": "nyc mocha",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist coverage"
   },
   "keywords": [],
   "author": {
@@ -41,7 +41,7 @@
       "src/**/*.ts"
     ],
     "reporter": [
-      "html",
+      "lcov",
       "text"
     ],
     "extends": "@istanbuljs/nyc-config-typescript",
