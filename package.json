@@ -13,7 +13,12 @@
     "lint": "eslint --ext .ts .",
     "pretest": "npm run build",
     "test": "nyc mocha",
-    "clean": "rimraf dist coverage"
+    "clean": "rimraf dist coverage",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "preversion": "npm test && npm run lint",
+    "postversion": "git push && git push --tags && && npm run publish"
   },
   "keywords": [],
   "author": {
@@ -28,13 +33,32 @@
   "config": {
     "forge": {
       "packagerConfig": {},
-      "makers": []
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "toolcreator",
+              "name": "roto"
+            }
+          }
+        }
+      ]
     }
   },
   "mocha": {
     "recursive": true,
-    "require": [ "ts-node/register" ],
-    "spec": [ "src/**/*.spec.ts" ]
+    "require": [
+      "ts-node/register"
+    ],
+    "spec": [
+      "src/**/*.spec.ts"
+    ]
   },
   "nyc": {
     "include": [
