@@ -126,6 +126,7 @@ export class BandList {
       const categoryUl = document.createElement("ul");
       const categoryNameLi = document.createElement("li");
       categoryNameLi.innerHTML = category.name != "" ? category.name : "?";
+      categoryNameLi.classList.add('band-list-category');
       categoryUl.appendChild(categoryNameLi);
       const bandListLi = document.createElement("li");
       const bandListUl = document.createElement("ul");
@@ -133,6 +134,7 @@ export class BandList {
         if (band.category == category.name) {
           const bandLi = document.createElement("li");
           bandLi.innerHTML = band.name;
+          bandLi.classList.add('band-list-band');
           bandListUl.appendChild(bandLi);
         }
       }
