@@ -1,7 +1,7 @@
 {
   "name": "roto",
   "productName": "roto",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Tool for creating personalized festival running orders",
   "main": "dist/main.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "preversion": "npm test && npm run lint",
-    "postversion": "git push && git push --tags && && npm run publish"
+    "postversion": "git push && git push --tags && npm run publish"
   },
   "keywords": [],
   "author": {
