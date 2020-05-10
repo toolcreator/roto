@@ -16,13 +16,21 @@ export class Gig {
     return this._start;
   }
   set start(start: Date) {
-    this._start = start;
+    if (!this.end || start <= this.end) {
+      this._start = start;
+    } else {
+      throw new Error('start cannot be after end');
+    }
   }
 
   get end(): Date {
     return this._end;
   }
   set end(end: Date) {
-    this._end = end;
+    if (!this.start || end >= this.start) {
+      this._end = end;
+    } else {
+      throw new Error('end cannot be before start');
+    }
   }
 }
