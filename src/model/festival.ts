@@ -23,14 +23,22 @@ export class Festival {
     return this._startDate;
   }
   set startDate(startDate: Date) {
-    this._startDate = startDate;
+    if (!this.endDate || startDate <= this.endDate) {
+      this._startDate = startDate;
+    } else {
+      throw new Error('start date cannot be after end date');
+    }
   }
 
   get endDate(): Date {
     return this._endDate;
   }
   set endDate(endDate: Date) {
-    this._endDate = endDate;
+    if (!this.startDate || endDate >= this.startDate) {
+      this._endDate = endDate;
+    } else {
+      throw new Error('end date cannot be before start date');
+    }
   }
 
   get bandCategories(): BandCategory[] {
