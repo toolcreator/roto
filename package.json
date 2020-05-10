@@ -1,7 +1,7 @@
 {
   "name": "roto",
   "productName": "roto",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tool for creating personalized festival running orders",
   "main": "dist/main.js",
   "scripts": {
@@ -99,6 +99,8 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-zip": "^6.0.0-beta.51",
+    "@electron-forge/publisher-github": "^6.0.0-beta.51",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/jsdom": "^16.2.1",
