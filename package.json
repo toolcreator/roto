@@ -10,7 +10,7 @@
     "build": "tsc",
     "prebuild-debug": "cd src/build-config && c-preprocessor --config debug-config.json build-config.ts.in build-config.ts",
     "build-debug": "tsc",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint src/**/*.ts",
     "pretest": "npm run build",
     "test": "nyc mocha",
     "clean": "rimraf dist coverage",
@@ -36,7 +36,11 @@
       "makers": [
         {
           "name": "@electron-forge/maker-zip",
-          "platforms": [ "linux", "win32", "darwin" ]
+          "platforms": [
+            "linux",
+            "win32",
+            "darwin"
+          ]
         }
       ],
       "publishers": [
@@ -50,6 +54,41 @@
           }
         }
       ]
+    }
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "impliedStrict": true
+      }
+    },
+    "parser": "@typescript-eslint/parser",
+    "env": {
+      "browser": true,
+      "es2020": true,
+      "node": true,
+      "mocha": true
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".ts", ".tsx", ".js", ".jsx"
+          ]
+        }
+      }
     }
   },
   "mocha": {
