@@ -1,7 +1,7 @@
 {
   "name": "roto",
   "productName": "roto",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Tool for creating personalized festival running orders",
   "main": "dist/main.js",
   "scripts": {
@@ -85,7 +85,10 @@
       "import/resolver": {
         "node": {
           "extensions": [
-            ".ts", ".tsx", ".js", ".jsx"
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx"
           ]
         }
       }
