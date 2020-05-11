@@ -1,7 +1,7 @@
 {
   "name": "roto",
   "productName": "roto",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Tool for creating personalized festival running orders",
   "main": "dist/main.js",
   "scripts": {
@@ -34,9 +34,15 @@
     "forge": {
       "packagerConfig": {},
       "make_targets": {
-        "linux": ["zip"],
-        "win32": ["zip"],
-        "darwin": ["zip"]
+        "linux": [
+          "zip"
+        ],
+        "win32": [
+          "zip"
+        ],
+        "darwin": [
+          "zip"
+        ]
       },
       "makers": [
         {
