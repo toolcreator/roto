@@ -14,11 +14,9 @@
     "pretest": "npm run build",
     "test": "nyc mocha",
     "clean": "rimraf dist coverage",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "publish-all-platforms": "docker build --tag roto-build docker && docker run --mount type=bind,src=$(npm prefix),dst=/roto --env GITHUB_TOKEN=${GITHUB_TOKEN} roto-build",
     "preversion": "npm test && npm run lint",
-    "postversion": "git push && git push --tags && npm run publish"
+    "postversion": "git push && git push --tags && npm run publish-all-platforms"
   },
   "keywords": [],
   "author": {
@@ -171,7 +169,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
     "material-design-icons": "^3.0.1"
   }
 }

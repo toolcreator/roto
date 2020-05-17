@@ -1,0 +1,12 @@
+FROM alpine:latest
+LABEL name roto-build
+RUN apk --no-cache add \
+  git \
+  npm \
+  wine \
+  zip
+WORKDIR /roto
+CMD npx electron-forge publish --platform linux && \
+    npx electron-forge publish --platform win32 && \
+    npx electron-forge publish --platform darwin && \
+    rm -rf out
