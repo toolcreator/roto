@@ -6,7 +6,7 @@ RUN apk --no-cache add \
   wine \
   zip
 WORKDIR /roto
-CMD npx electron-forge publish --platform linux && \
-    npx electron-forge publish --platform win32 && \
-    npx electron-forge publish --platform darwin && \
-    rm -rf out
+CMD rm -rf out && \
+    npx electron-forge make --platform linux && \
+    npx electron-forge make --platform win32 && \
+    npx electron-forge make --platform darwin

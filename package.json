@@ -14,9 +14,9 @@
     "pretest": "npm run build",
     "test": "nyc mocha",
     "clean": "rimraf dist coverage",
-    "publish-all-platforms": "docker build --tag roto-build docker && docker run --mount type=bind,src=$(npm prefix),dst=/roto --env GITHUB_TOKEN=${GITHUB_TOKEN} roto-build",
+    "make-all-platforms": "docker build --tag roto-build docker && docker run --mount type=bind,src=$(npm prefix),dst=/roto --env GITHUB_TOKEN=${GITHUB_TOKEN} roto-build",
     "preversion": "npm test && npm run lint",
-    "postversion": "git push && git push --tags && npm run publish-all-platforms"
+    "postversion": "git push && git push --tags && npm run make-all-platforms"
   },
   "keywords": [],
   "author": {
@@ -45,17 +45,6 @@
       "makers": [
         {
           "name": "@electron-forge/maker-zip"
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "toolcreator",
-              "name": "roto"
-            }
-          }
         }
       ]
     }
@@ -147,7 +136,6 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.50",
     "@electron-forge/maker-zip": "^6.0.0-beta.51",
-    "@electron-forge/publisher-github": "^6.0.0-beta.51",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/jsdom": "^16.2.1",
