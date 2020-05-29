@@ -1,7 +1,7 @@
 {
   "name": "roto",
   "productName": "roto",
-  "version": "0.0.0",
+  "version": "0.0.7",
   "description": "Tool for creating personalized festival running orders",
   "main": "dist/main.js",
   "scripts": {
@@ -10,14 +10,17 @@
     "build": "tsc",
     "prebuild-debug": "cd src/build-config && c-preprocessor --config debug-config.json build-config.ts.in build-config.ts",
     "build-debug": "tsc",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint src/**/*.ts",
     "pretest": "npm run build",
     "test": "nyc mocha",
-    "clean": "rimraf dist coverage"
+    "clean": "rimraf dist coverage",
+    "make-all-platforms": "docker build --tag roto-build docker && docker run --mount type=bind,src=$(npm prefix),dst=/roto --env GITHUB_TOKEN=${GITHUB_TOKEN} roto-build",
+    "preversion": "npm test && npm run lint",
+    "postversion": "git push && git push --tags && npm run make-all-platforms"
   },
   "keywords": [],
   "author": {
-    "name": "de.toolcreator",
+    "name": "toolcreator",
     "email": "de.toolcreator@gmail.com"
   },
   "license": "MIT",
@@ -28,13 +31,70 @@
   "config": {
     "forge": {
       "packagerConfig": {},
-      "makers": []
+      "make_targets": {
+        "linux": [
+          "zip"
+        ],
+        "win32": [
+          "zip"
+        ],
+        "darwin": [
+          "zip"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        }
+      ]
+    }
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "impliedStrict": true
+      }
+    },
+    "parser": "@typescript-eslint/parser",
+    "env": {
+      "browser": true,
+      "es2020": true,
+      "node": true,
+      "mocha": true
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx"
+          ]
+        }
+      }
     }
   },
   "mocha": {
     "recursive": true,
-    "require": [ "ts-node/register" ],
-    "spec": [ "src/**/*.spec.ts" ]
+    "require": [
+      "ts-node/register"
+    ],
+    "spec": [
+      "src/**/*.spec.ts"
+    ]
   },
   "nyc": {
     "include": [
@@ -75,6 +135,7 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-zip": "^6.0.0-beta.51",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/jsdom": "^16.2.1",
@@ -96,7 +157,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
     "material-design-icons": "^3.0.1"
   }
 }
