@@ -211,4 +211,18 @@ describe('Band list', () => {
     expect(cbCalled).to.equal(false);
     expect(findBandLi(name1)).to.equal(null);
   });
+
+  it('shows bands alphabetically sorted', () => {
+    const bandList = BandList.instance;
+    bandList.setBandCategories(bandCategories);
+    bandList.setBands(bands);
+
+    const bandLi0 = findBandLi('Band Nope');
+    const bandLi1 = findBandLi('Nope Band');
+    const parentUl = bandLi0.parentElement as HTMLUListElement;
+
+    expect(parentUl.children.length).to.equal(2);
+    expect(parentUl.children[0]).to.equal(bandLi0);
+    expect(parentUl.children[1]).to.equal(bandLi1);
+  });
 });

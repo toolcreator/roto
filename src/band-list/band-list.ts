@@ -130,6 +130,15 @@ export class BandList {
       categoryUl.appendChild(categoryNameLi);
       const bandListLi = document.createElement("li");
       const bandListUl = document.createElement("ul");
+      this.bands.sort((a, b) => {
+        if(a.name === b.name) {
+          return 0;
+        } else if(a.name < b.name) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
       for (const band of this.bands) {
         if (band.category == category.name) {
           const bandLi = document.createElement("li");
