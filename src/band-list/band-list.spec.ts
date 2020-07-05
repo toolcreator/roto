@@ -227,6 +227,7 @@ describe('Band list', () => {
       let previousBand = '';
       for (const bandLi of bandsUl.children) {
         expect(previousBand.localeCompare(bandLi.innerHTML)).to.be.lessThan(0);
+        previousBand = bandLi.innerHTML;
       }
     }
   });
