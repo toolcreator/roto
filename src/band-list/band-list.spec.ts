@@ -125,8 +125,8 @@ describe('Band list', () => {
     expect(oldCategory).to.not.equal('');
 
     let newCategory = '';
-    for(const category of bandCategories) {
-      if(oldCategory != category.name) {
+    for (const category of bandCategories) {
+      if (oldCategory != category.name) {
         newCategory = category.name;
         break;
       }
@@ -210,5 +210,24 @@ describe('Band list', () => {
     bandList.removeBand(name1, false);
     expect(cbCalled).to.equal(false);
     expect(findBandLi(name1)).to.equal(null);
+  });
+
+  it('shows bands sorted alphabetically', () => {
+    BandList.instance.setBandCategories(bandCategories);
+    BandList.instance.setBands(bands);
+
+    const bandListElem = getBandListElem();
+    expect(bandListElem.children.length).to.equal(bandCategories.length + 1);
+
+    for (let c = 0; c < bandListElem.children.length; ++c) {
+      const categoryUl = bandListElem.children[c];
+      const bandsLi = categoryUl.children[1];
+      const bandsUl = bandsLi.children[0];
+
+      let previousBand = '';
+      for (const bandLi of bandsUl.children) {
+        expect(previousBand.localeCompare(bandLi.innerHTML)).to.be.lessThan(0);
+      }
+    }
   });
 });

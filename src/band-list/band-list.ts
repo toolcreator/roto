@@ -131,15 +131,7 @@ export class BandList {
       categoryUl.appendChild(categoryNameLi);
       const bandListLi = document.createElement('li');
       const bandListUl = document.createElement('ul');
-      this.bands.sort((a, b) => {
-        if(a.name === b.name) {
-          return 0;
-        } else if(a.name < b.name) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+      this.bands.sort((a, b) => { return a.name.localeCompare(b.name) });
       for (const band of this.bands) {
         if (band.category == category.name) {
           const bandLi = document.createElement('li');
@@ -149,8 +141,8 @@ export class BandList {
           bandLi.addEventListener('contextmenu', event => {
             event.preventDefault();
             const ctxMenu = new remote.Menu();
-            for(const category of this.bandCategories) {
-              if(category.name != band.category) {
+            for (const category of this.bandCategories) {
+              if (category.name != band.category) {
                 ctxMenu.append(new remote.MenuItem({
                   'label': category.name != '' ? category.name : '?',
                   'click': () => this.changeBandCategory(band.name, category.name, true)
