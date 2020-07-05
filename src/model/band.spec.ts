@@ -20,7 +20,7 @@ describe('Band', () => {
   });
 
   it('sets its name', () => {
-    const NEW_NAME = "Some Other Band";
+    const NEW_NAME = 'Some Other Band';
     expect(NEW_NAME).to.not.equal(NAME);
     band.name = NEW_NAME;
     expect(band.name).to.equal(NEW_NAME);
