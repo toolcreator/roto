@@ -26,7 +26,7 @@ export class BandList {
     for (const bandCategory of bandCategories) {
       this.bandCategories.push(bandCategory);
     }
-    this.bandCategories.push(new BandCategory('?', 'inherit'));
+    this.bandCategories.push(new BandCategory('', 'inherit'));
     this.buildList();
   }
 
@@ -126,7 +126,7 @@ export class BandList {
     for (const category of this.bandCategories) {
       const categoryUl = document.createElement('ul');
       const categoryNameLi = document.createElement('li');
-      categoryNameLi.innerHTML = category.name;
+      categoryNameLi.innerHTML = category.name != '' ? category.name : '?';
       categoryNameLi.classList.add('band-list-category');
       categoryUl.appendChild(categoryNameLi);
       const bandListLi = document.createElement('li');
@@ -152,7 +152,7 @@ export class BandList {
             for(const category of this.bandCategories) {
               if(category.name != band.category) {
                 ctxMenu.append(new remote.MenuItem({
-                  'label': category.name,
+                  'label': category.name != '' ? category.name : '?',
                   'click': () => this.changeBandCategory(band.name, category.name, true)
                 }));
               }
