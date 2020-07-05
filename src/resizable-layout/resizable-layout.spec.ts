@@ -24,8 +24,8 @@ describe('Resizable layout', () => {
 
   it('resizes percentage-wise on mouse drags', () => {
     const mvMouseX = 0.1 * window.innerWidth;
-    handler.dispatchEvent(new MouseEvent('mousedown', { "bubbles": true }));
-    document.dispatchEvent(new MouseEvent('mousemove', { "clientX": mvMouseX }));
+    handler.dispatchEvent(new MouseEvent('mousedown', { 'bubbles': true }));
+    document.dispatchEvent(new MouseEvent('mousemove', { 'clientX': mvMouseX }));
     expect(parseFloat(bandList.style.width)).to.be.closeTo(30, 0.1);
     expect(parseFloat(roOutput.style.width)).to.be.closeTo(70, 0.1);
   });

@@ -4,9 +4,9 @@ import { Festival } from '../model/festival';
 import { BandCategory } from '../model/band-category';
 import * as fs from 'fs';
 
-const adapterSelector = document.getElementById("festivalAdapter") as HTMLSelectElement;
+const adapterSelector = document.getElementById('festivalAdapter') as HTMLSelectElement;
 FESTIVAL_ADAPTER_NAMES.forEach((value, key) => {
-  const adapterOption = document.createElement('option') as HTMLOptionElement;
+  const adapterOption = document.createElement('option');
   adapterOption.text = key;
   adapterSelector.add(adapterOption);
 });
