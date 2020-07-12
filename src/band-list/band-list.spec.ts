@@ -30,14 +30,14 @@ describe('Band list', () => {
   beforeEach(() => {
     jsdomGlobalFromFile('src/index.html');
 
-    /* eslint-disable @typescript-eslint/ban-ts-ignore */
+    /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     BandList._instance = null;
 
-    /* eslint-disable @typescript-eslint/ban-ts-ignore */
+    /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     findBandLi = BandList.instance.findBandElement;
-    /* eslint-disable @typescript-eslint/ban-ts-ignore */
+    /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     findBandCategory = BandList.instance.findBandCategory;
   });
