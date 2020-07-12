@@ -1,5 +1,6 @@
 import { BandCategory } from '../model/band-category';
 import { Band } from '../model/band';
+import { remote } from 'electron';
 
 export interface OnBandNameChangedCallback { (oldName: string, newName: string): void }
 export interface OnBandCategoryChangedCallback { (bandName: string, newCategory: string): void }
@@ -25,7 +26,7 @@ export class BandList {
     for (const bandCategory of bandCategories) {
       this.bandCategories.push(bandCategory);
     }
-    this.bandCategories.push(new BandCategory("", "inherit"));
+    this.bandCategories.push(new BandCategory('', 'inherit'));
     this.buildList();
   }
 
@@ -123,18 +124,34 @@ export class BandList {
     }
 
     for (const category of this.bandCategories) {
-      const categoryUl = document.createElement("ul");
-      const categoryNameLi = document.createElement("li");
-      categoryNameLi.innerHTML = category.name != "" ? category.name : "?";
+      const categoryUl = document.createElement('ul');
+      const categoryNameLi = document.createElement('li');
+      categoryNameLi.innerHTML = category.name != '' ? category.name : '?';
       categoryNameLi.classList.add('band-list-category');
       categoryUl.appendChild(categoryNameLi);
-      const bandListLi = document.createElement("li");
-      const bandListUl = document.createElement("ul");
+      const bandListLi = document.createElement('li');
+      const bandListUl = document.createElement('ul');
+      this.bands.sort((a, b) => { return a.name.localeCompare(b.name) });
       for (const band of this.bands) {
         if (band.category == category.name) {
-          const bandLi = document.createElement("li");
+          const bandLi = document.createElement('li');
           bandLi.innerHTML = band.name;
           bandLi.classList.add('band-list-band');
+
+          bandLi.addEventListener('contextmenu', event => {
+            event.preventDefault();
+            const ctxMenu = new remote.Menu();
+            for (const category of this.bandCategories) {
+              if (category.name != band.category) {
+                ctxMenu.append(new remote.MenuItem({
+                  'label': category.name != '' ? category.name : '?',
+                  'click': (): void => this.changeBandCategory(band.name, category.name, true)
+                }));
+              }
+            }
+            ctxMenu.popup();
+          }, false);
+
           bandListUl.appendChild(bandLi);
         }
       }
@@ -148,7 +165,7 @@ export class BandList {
     for (const categoryUl of this.root.children) {
       const bandsUl = categoryUl.children[1].children[0];
       for (const bandLi of bandsUl.children) {
-        if (bandLi.innerHTML == bandName) {
+        if (bandLi.innerHTML.includes(bandName)) {
           return bandLi as HTMLLIElement;
         }
       }
@@ -162,7 +179,7 @@ export class BandList {
       const categoryLi = bandElement.parentElement.parentElement.previousSibling as HTMLElement;
       return categoryLi.innerHTML;
     } catch (err) {
-      return "";
+      return '';
     }
   }
 }

@@ -22,7 +22,7 @@ describe('Date navigation bar', () => {
 
     jsdomGlobalFromFile('src/index.html');
 
-    /* eslint-disable @typescript-eslint/ban-ts-ignore */
+    /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     DateNavigation._instance = null;
   });
