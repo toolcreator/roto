@@ -145,7 +145,7 @@ export class BandList {
               if (category.name != band.category) {
                 ctxMenu.append(new remote.MenuItem({
                   'label': category.name != '' ? category.name : '?',
-                  'click': () => this.changeBandCategory(band.name, category.name, true)
+                  'click': (): void => this.changeBandCategory(band.name, category.name, true)
                 }));
               }
             }
