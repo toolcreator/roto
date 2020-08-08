@@ -6,14 +6,15 @@ function createFestival(): void {
   const createDialog = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
     modal: true,
-    width: 220,
-    height: 400,
+    width: 250,
+    height: 500,
     webPreferences: {
       nodeIntegration: true
     }
   });
-  createDialog.loadFile(path.join(__dirname, '../../src/create-dialog/create-dialog.html'));
-  // createDialog.webContents.openDevTools();
+  createDialog.loadFile(path.join(__dirname, '../../src/festival-settings-dialog/festival-settings-dialog.html'));
+  createDialog.title = 'Create Festival';
+  createDialog.webContents.openDevTools();
 }
 
 function openFestival(): void {
