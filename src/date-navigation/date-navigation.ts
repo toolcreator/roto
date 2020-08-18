@@ -30,6 +30,7 @@ export class DateNavigation {
     if(this.selectedDateChangedCallback) {
       this.selectedDateChangedCallback(this._currentDate);
     }
+    this.buildNav();
   }
 
   private constructor() {

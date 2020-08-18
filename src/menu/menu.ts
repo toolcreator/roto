@@ -14,7 +14,7 @@ function createFestival(): void {
   });
   dialogWindow.title = 'Create festival';
   dialogWindow.loadFile(path.join(__dirname, '../../src/festival-settings-dialog/festival-settings-dialog.html'))
-  dialogWindow.webContents.openDevTools();
+  // dialogWindow.webContents.openDevTools();
 }
 
 function openFestival(): void {
