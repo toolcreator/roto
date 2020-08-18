@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 function createFestival(): void {
-  const createDialog = new remote.BrowserWindow({
+  const dialogWindow = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
     modal: true,
     width: 250,
@@ -12,9 +12,9 @@ function createFestival(): void {
       nodeIntegration: true
     }
   });
-  createDialog.loadFile(path.join(__dirname, '../../src/festival-settings-dialog/festival-settings-dialog.html'));
-  createDialog.title = 'Create Festival';
-  createDialog.webContents.openDevTools();
+  dialogWindow.title = 'Create festival';
+  dialogWindow.loadFile(path.join(__dirname, '../../src/festival-settings-dialog/festival-settings-dialog.html'))
+  dialogWindow.webContents.openDevTools();
 }
 
 function openFestival(): void {
