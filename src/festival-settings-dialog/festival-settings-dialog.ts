@@ -1,12 +1,28 @@
 import { ipcRenderer, remote } from 'electron';
-import { FESTIVAL_ADAPTER_NAMES } from '../adapters/festival-adapters';
+import { FESTIVAL_ADAPTER_NAMES, FestivalAdapters } from '../adapters/festival-adapters';
 import { Festival } from '../model/festival';
 import { BandCategory } from '../model/band-category';
 import * as fs from 'fs';
 
 
+ipcRenderer.on('set-name', (event: Electron.IpcRendererEvent, name: string) => {
+  nameInput.value = name;
+});
+
+ipcRenderer.on('set-start-date', (event: Electron.IpcRendererEvent, startDate: string) => {
+  startDateInput.value = startDate;
+});
+
+ipcRenderer.on('set-end-date', (event: Electron.IpcRendererEvent, endDate: string) => {
+  endDateInput.value = endDate;
+});
+
 ipcRenderer.on('add-category', (event: Electron.IpcRendererEvent, category: BandCategory | undefined) => {
   addCategory(category?.name, category?.color);
+});
+
+ipcRenderer.on('set-adapter', (event: Electron.IpcRendererEvent, adapter: number) => {
+  adapterSelector.selectedIndex = adapter;
 });
 
 function addCategory(name: string | undefined = undefined,
@@ -83,7 +99,7 @@ function submit(): void {
   if (fileName != undefined) {
     fs.writeFileSync(fileName, JSON.stringify(festival));
     const currentWindow = remote.getCurrentWindow();
-    currentWindow.getParentWindow().webContents.send('festival-created', festival);
+    currentWindow.getParentWindow().webContents.send('festival-configured', festival);
     currentWindow.close();
   }
 }
