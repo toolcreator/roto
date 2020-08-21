@@ -1,19 +1,27 @@
-import { remote, ipcRenderer } from 'electron';
+import { remote, ipcRenderer, BrowserWindow, dialog } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 
-function createFestival(): void {
-  const createDialog = new remote.BrowserWindow({
+let curFestival: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+function createFestivalSettingsDialog(): BrowserWindow {
+  const dialogWindow = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
-    modal: true,
-    width: 220,
-    height: 400,
+    modal: false,//true,
+    width: 250,
+    height: 500,
     webPreferences: {
       nodeIntegration: true
     }
   });
-  createDialog.loadFile(path.join(__dirname, '../../src/create-dialog/create-dialog.html'));
-  // createDialog.webContents.openDevTools();
+  dialogWindow.loadFile(path.join(__dirname, '../../src/festival-settings-dialog/festival-settings-dialog.html'));
+  // dialogWindow.webContents.openDevTools();
+  return dialogWindow;
+}
+
+function createFestival(): void {
+  const dialogWindow = createFestivalSettingsDialog();
+  dialogWindow.title = 'Create festival';
 }
 
 function openFestival(): void {
@@ -34,8 +42,8 @@ function openFestival(): void {
       return;
     }
     try {
-      const festival = JSON.parse(fileContent);
-      remote.getCurrentWebContents().send('festival-changed', festival);
+      curFestival = JSON.parse(fileContent);
+      remote.getCurrentWebContents().send('festival-changed', curFestival);
     } catch (err) {
       remote.dialog.showErrorBox('Could not parse festival file', (err as Error).message);
       return;
@@ -48,7 +56,19 @@ function printRunningOrder(): void {
 }
 
 function openSettings(): void {
-  alert('settings');
+  const dialogWindow = createFestivalSettingsDialog();
+  dialogWindow.title = 'Change Festival Settings';
+  dialogWindow.webContents.on('dom-ready', () => {
+    dialogWindow.webContents.send('set-name', curFestival._name);
+    dialogWindow.webContents.send('set-start-date', curFestival._startDate.substr(0, 10));
+    dialogWindow.webContents.send('set-end-date', curFestival._endDate.substr(0, 10));
+    dialogWindow.webContents.send('set-adapter', curFestival._adapter);
+    for (const category of curFestival._bandCategories) {
+      category.name = category._name;
+      category.color = category._color;
+      dialogWindow.webContents.send('add-category', category);
+    }
+});
 }
 
 let settingsButton: HTMLButtonElement;
@@ -61,8 +81,9 @@ export function init(): void {
   settingsButton.addEventListener('click', openSettings, false);
   settingsButton.disabled = true;
 
-  ipcRenderer.on('festival-created', (event, festival) => {
-    remote.getCurrentWebContents().send('festival-changed', festival);
+  ipcRenderer.on('festival-configured', (event, festival) => {
+    curFestival = festival;
+    remote.getCurrentWebContents().send('festival-changed', curFestival);
   });
 }
 
