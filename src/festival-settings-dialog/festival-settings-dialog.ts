@@ -1,8 +1,7 @@
 import { ipcRenderer, remote } from 'electron';
-import { FESTIVAL_ADAPTER_NAMES, FestivalAdapters } from '../adapters/festival-adapters';
+import { FESTIVAL_ADAPTER_NAMES } from '../adapters/festival-adapters';
 import { Festival } from '../model/festival';
 import { BandCategory } from '../model/band-category';
-import * as fs from 'fs';
 
 
 ipcRenderer.on('set-name', (event: Electron.IpcRendererEvent, name: string) => {
@@ -97,9 +96,8 @@ function submit(): void {
     }
   );
   if (fileName != undefined) {
-    fs.writeFileSync(fileName, JSON.stringify(festival));
     const currentWindow = remote.getCurrentWindow();
-    currentWindow.getParentWindow().webContents.send('festival-configured', festival);
+    currentWindow.getParentWindow().webContents.send('festival-configured', [festival, fileName]);
     currentWindow.close();
   }
 }

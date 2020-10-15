@@ -1,4 +1,4 @@
-import { remote, ipcRenderer, BrowserWindow, dialog } from 'electron';
+import { remote, ipcRenderer, BrowserWindow } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -43,7 +43,7 @@ function openFestival(): void {
     }
     try {
       curFestival = JSON.parse(fileContent);
-      remote.getCurrentWebContents().send('festival-changed', curFestival);
+      remote.getCurrentWebContents().send('festival-changed', [curFestival, fileName]);
     } catch (err) {
       remote.dialog.showErrorBox('Could not parse festival file', (err as Error).message);
       return;
@@ -81,9 +81,9 @@ export function init(): void {
   settingsButton.addEventListener('click', openSettings, false);
   settingsButton.disabled = true;
 
-  ipcRenderer.on('festival-configured', (event, festival) => {
+  ipcRenderer.on('festival-configured', (event, [festival, fileName]) => {
     curFestival = festival;
-    remote.getCurrentWebContents().send('festival-changed', curFestival);
+    remote.getCurrentWebContents().send('festival-changed', [curFestival, fileName]);
   });
 }
 
