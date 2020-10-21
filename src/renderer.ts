@@ -8,6 +8,7 @@ import { ipcRenderer, powerSaveBlocker, remote } from 'electron';
 import * as Menu from './menu/menu';
 import * as ResizableLayout from './resizable-layout/resizeable-layout';
 import * as fs from 'fs';
+import { FestivalAdapters, FESTIVAL_ADAPTERS } from './adapters/festival-adapters';
 
 const festival = new Festival();
 let currentFileName = "";
@@ -51,7 +52,7 @@ ipcRenderer.on('festival-changed', (event, [f, fnm]) => {
   onFestivalChanged(f);
 });
 
-function onFestivalChanged(f: any): void {
+async function onFestivalChanged(f: any): Promise<void> {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   festival.name = f._name;
   festival.startDate = new Date(f._startDate);
@@ -62,6 +63,7 @@ function onFestivalChanged(f: any): void {
   });
   festival.adapter = f._adapter;
   festival.bands = [];
+
   if (f._bands.length > 0) {
     f._bands.forEach((band: any) => {
       const b = new Band(band._name, band._category, []);
@@ -74,6 +76,17 @@ function onFestivalChanged(f: any): void {
     });
   }
   /* eslint-enable @typescript-eslint/no-explicit-any */
+
+  if (festival.adapter != FestivalAdapters.NONE) {
+    const adapter = FESTIVAL_ADAPTERS.get(festival.adapter);
+    const remoteBands = await adapter.getBands();
+    festival.bands = festival.bands.filter(band => remoteBands.includes(band.name));
+    for (const remoteBand of remoteBands) {
+      if (!festival.bands.some(band => band.name == remoteBand)) {
+        festival.bands.push(new Band(remoteBand, '', []));
+      }
+    }
+  }
 
   bandList.setBandCategories(festival.bandCategories);
   bandList.setBands(festival.bands);

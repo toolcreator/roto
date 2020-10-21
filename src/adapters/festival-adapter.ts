@@ -1,9 +1,10 @@
+export class Gig {
+  constructor(readonly band: string, readonly stage: string, readonly start: Date, readonly end: Date) {
+    // empty
+  }
+}
+
 export interface FestivalAdapter {
-  getBands: () => string[];
-  getRunningOrder: () => {
-    band: string;
-    stage: string;
-    start: Date;
-    end: Date;
-  }[];
+  getBands: () => Promise<string[]>;
+  getRunningOrder: () => Promise<Gig[]>;
 }
