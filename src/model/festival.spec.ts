@@ -2,7 +2,7 @@ import 'mocha'
 import { expect } from 'chai';
 import { Festival } from './festival';
 import { BandCategory } from './band-category';
-import { FestivalAdapters, FESTIVAL_ADAPTERS } from '../adapters/festival-adapters';
+import { FestivalAdapters } from '../adapters/festival-adapters';
 import { Band } from './band';
 
 describe('Festival', () => {

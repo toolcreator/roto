@@ -1,4 +1,4 @@
-import { FestivalAdapter, Gig } from "./festival-adapter";
+import { FestivalAdapter, Gig } from './festival-adapter';
 import axios from 'axios';
 
 const HTTP_OK = 200;
