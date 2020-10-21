@@ -87,7 +87,10 @@ describe('Festival', () => {
   });
 
   it.skip('sets its adapter', () => {
-    // Currently, there is only one adapter
+    const NEW_ADAPTER = FestivalAdapters.WOA2021;
+    expect(NEW_ADAPTER).to.not.equal(ADAPTER);
+    festival.adapter = NEW_ADAPTER;
+    expect(festival.adapter).to.equal(NEW_ADAPTER);
   });
 
   it('gets its bands', () => {

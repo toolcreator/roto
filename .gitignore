@@ -4,3 +4,4 @@ src/build-config/build-config.ts
 .nyc_output/
 coverage
 out
+festival.json
