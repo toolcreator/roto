@@ -1,3 +1,7 @@
+.ro-output-content {
+    padding: 10px;
+}
+
 .ro-output-content td {
     text-align    : center;
     vertical-align: middle;

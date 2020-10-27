@@ -9,6 +9,7 @@ export class Festival {
     private _endDate?: Date,
     private _bandCategories?: BandCategory[],
     private _adapter?: FestivalAdapters,
+    private _stages?: string[],
     private _bands?: Band[]
   ) { /* empty */ }
 
@@ -53,6 +54,14 @@ export class Festival {
   }
   set adapter(adapter: FestivalAdapters) {
     this._adapter = adapter;
+  }
+
+  get stages(): string[] {
+    return this._stages;
+  }
+
+  set stages(stages: string[]) {
+    this._stages = stages;
   }
 
   get bands(): Band[] {

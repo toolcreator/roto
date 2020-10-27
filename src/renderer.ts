@@ -4,11 +4,12 @@ import { Band } from './model/band';
 import { Gig } from './model/gig';
 import { DateNavigation } from './date-navigation/date-navigation';
 import { BandList } from './band-list/band-list';
-import { ipcRenderer, powerSaveBlocker, remote } from 'electron';
+import { FestivalAdapters, FESTIVAL_ADAPTERS } from './adapters/festival-adapters';
+import { ipcRenderer, remote } from 'electron';
 import * as Menu from './menu/menu';
 import * as ResizableLayout from './resizable-layout/resizeable-layout';
 import * as fs from 'fs';
-import { FestivalAdapters, FESTIVAL_ADAPTERS } from './adapters/festival-adapters';
+import { RunningOrderOutput } from './ro-output/ro-output';
 
 const festival = new Festival();
 let currentFileName = "";
@@ -19,17 +20,17 @@ ResizableLayout.init();
 const bandList = BandList.instance;
 bandList.setOnBandAddedCallback((bandName: string, bandCategory: string) => {
   festival.bands.push(new Band(bandName, bandCategory, []));
-  // TODO tell everyone interested as at the end of onFestivalChanged
+  roOutput.setBands(festival.bands);
   save();
 });
 bandList.setOnBandCategoryChangedCallback((bandName: string, newCategory: string) => {
   festival.bands.find(band => band.name == bandName).category = newCategory;
-  // TODO tell everyone interested as at the end of onFestivalChanged
+  roOutput.setBands(festival.bands);
   save();
 });
 bandList.setOnBandNameChangedCallback((oldName: string, newName: string) => {
   festival.bands.find(band => band.name == oldName).name = newName;
-  // TODO tell everyone interested as at the end of onFestivalChanged
+  roOutput.setBands(festival.bands);
   save();
 });
 bandList.setOnBandRemovedCallback((bandName: string) => {
@@ -38,13 +39,19 @@ bandList.setOnBandRemovedCallback((bandName: string) => {
       array.splice(index, 1);
     }
   });
-  // TODO tell everyone interested as at the end of onFestivalChanged
+  roOutput.setBands(festival.bands);
   save();
 });
 
+const roOutput = RunningOrderOutput.instance;
+roOutput.setStagesChangedCallback(stages => {
+  festival.stages = stages;
+  save();
+})
+
 const dateNav = DateNavigation.instance;
 dateNav.setSelectedDateChangedCallback(selectedDate => {
-  // TODO tell running order output the date changed
+  roOutput.setDay(selectedDate);
 });
 
 ipcRenderer.on('festival-changed', (event, [f, fnm]) => {
@@ -59,9 +66,10 @@ async function onFestivalChanged(f: any): Promise<void> {
   festival.endDate = new Date(f._endDate);
   festival.bandCategories = [];
   f._bandCategories.forEach((bandCategory: any) => {
-    festival.bandCategories.push(new BandCategory(bandCategory._name, bandCategory._color));
+    festival.bandCategories.push(new BandCategory(bandCategory._name, bandCategory._color, bandCategory._rank));
   });
   festival.adapter = f._adapter;
+  festival.stages = f._stages;
   festival.bands = [];
 
   if (f._bands.length > 0) {
@@ -100,6 +108,9 @@ async function onFestivalChanged(f: any): Promise<void> {
     });
     return;
   }
+
+  roOutput.setBands(festival.bands);
+  roOutput.setStages(festival.stages);
 
   Menu.setSettingsButtonDisabled(false);
 

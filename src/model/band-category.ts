@@ -1,7 +1,8 @@
 export class BandCategory {
   constructor(
     private _name: string,
-    private _color: string
+    private _color: string,
+    private _rank: number
   ) { /* empty */ }
 
   get name(): string {
@@ -16,5 +17,13 @@ export class BandCategory {
   }
   set color(color: string) {
     this._color = color;
+  }
+
+  get rank(): number {
+    return this._rank;
+  }
+
+  set rank(rank: number) {
+    this._rank = rank;
   }
 }

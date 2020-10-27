@@ -26,7 +26,7 @@ export class BandList {
     for (const bandCategory of bandCategories) {
       this.bandCategories.push(bandCategory);
     }
-    this.bandCategories.push(new BandCategory('', 'inherit'));
+    this.bandCategories.push(new BandCategory('', 'inherit', Number.MAX_VALUE));
     this.buildList();
   }
 

@@ -17,7 +17,7 @@ ipcRenderer.on('set-end-date', (event: Electron.IpcRendererEvent, endDate: strin
 });
 
 ipcRenderer.on('add-category', (event: Electron.IpcRendererEvent, category: BandCategory | undefined) => {
-  addCategory(category?.name, category?.color);
+  addCategory(category?.name, category?.color, category?.rank);
 });
 
 ipcRenderer.on('set-adapter', (event: Electron.IpcRendererEvent, adapter: number) => {
@@ -25,7 +25,8 @@ ipcRenderer.on('set-adapter', (event: Electron.IpcRendererEvent, adapter: number
 });
 
 function addCategory(name: string | undefined = undefined,
-  color: string | undefined = undefined): void {
+                     color: string | undefined = undefined,
+                     rank: number | undefined = undefined): void {
   const row = document.createElement('tr');
   const catCell = document.createElement('td');
   const colCell = document.createElement('td');
@@ -42,6 +43,13 @@ function addCategory(name: string | undefined = undefined,
   colIn.required = true;
   colIn.value = color ? color : '#ffffff';
   colCell.appendChild(colIn);
+
+  const rankIn = document.createElement('input');
+  rankIn.type = 'number';
+  rankIn.required = true;
+  rankIn.value = rank ? rank.toString() : (categoryTable.rows.length + 1).toString();
+  rankIn.step = '1';
+  colCell.appendChild(rankIn);
 
   const remBtn = document.createElement('button');
   remBtn.type = 'button';
@@ -72,7 +80,8 @@ function submit(): void {
     const cells = catTableRows[rowIdx].cells;
     const catName = (<HTMLInputElement>cells[0].firstChild).value.trim();
     const catColor = (<HTMLInputElement>cells[1].firstChild).value;
-    bandCategories.push(new BandCategory(catName, catColor));
+    const catRank = parseInt((<HTMLInputElement>cells[2].firstChild).value);
+    bandCategories.push(new BandCategory(catName, catColor, catRank));
   }
 
   const festival = new Festival(
@@ -81,6 +90,7 @@ function submit(): void {
     endDate,
     bandCategories,
     festivalAdapter,
+    [],
     []
   );
 
