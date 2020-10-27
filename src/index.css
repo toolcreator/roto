@@ -1,4 +1,4 @@
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "../node_modules/material-design-icons-iconfont/dist/material-design-icons.css";
 @import "resizable-layout/resizable-layout.css";
 @import "menu/menu.css";
 @import "date-navigation/date-navigation.css";
