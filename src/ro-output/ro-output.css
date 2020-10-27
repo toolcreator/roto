@@ -1,0 +1,23 @@
+.ro-output-content td {
+    text-align    : center;
+    vertical-align: middle;
+    border        : solid 1px black;
+}
+
+.ro-output-content table {
+    empty-cells: hide;
+}
+
+.ro-output-content div.page {
+    page-break-inside          : avoid !important;
+    -webkit-region-break-inside: avoid !important;
+}
+
+.ro-output-content table tr td,
+.ro-output-content table tr th {
+    page-break-inside          : avoid !important;
+    -webkit-region-break-inside: avoid !important;
+    page-break-after           : auto !important;
+    -webkit-region-break-after : auto !important;
+    position: relative;
+}
