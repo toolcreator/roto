@@ -11,6 +11,7 @@ import * as fs from 'fs';
 import { FestivalAdapters, FESTIVAL_ADAPTERS } from './adapters/festival-adapters';
 
 const festival = new Festival();
+festival.bands = [];
 let currentFileName = "";
 
 Menu.init();
@@ -62,9 +63,9 @@ async function onFestivalChanged(f: any): Promise<void> {
     festival.bandCategories.push(new BandCategory(bandCategory._name, bandCategory._color));
   });
   festival.adapter = f._adapter;
-  festival.bands = [];
 
   if (f._bands.length > 0) {
+    festival.bands = [];
     f._bands.forEach((band: any) => {
       const b = new Band(band._name, band._category, []);
       if (band._gigs.length > 0) {
