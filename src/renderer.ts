@@ -12,6 +12,7 @@ import * as fs from 'fs';
 import { RunningOrderOutput } from './ro-output/ro-output';
 
 const festival = new Festival();
+festival.bands = [];
 let currentFileName = "";
 
 Menu.init();
@@ -70,9 +71,10 @@ async function onFestivalChanged(f: any): Promise<void> {
   });
   festival.adapter = f._adapter;
   festival.stages = f._stages;
-  festival.bands = [];
+
 
   if (f._bands.length > 0) {
+    festival.bands = [];
     f._bands.forEach((band: any) => {
       const b = new Band(band._name, band._category, []);
       if (band._gigs.length > 0) {

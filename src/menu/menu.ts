@@ -82,7 +82,11 @@ export function init(): void {
   settingsButton.disabled = true;
 
   ipcRenderer.on('festival-configured', (event, [festival, fileName]) => {
-    curFestival = festival;
+    curFestival._name = festival._name;
+    curFestival._startDate = festival._startDate.toJSON();
+    curFestival._endDate = festival._endDate.toJSON();
+    curFestival._bandCategories = festival._bandCategories;
+    curFestival._festivalAdapter = festival._festivalAdapter;
     remote.getCurrentWebContents().send('festival-changed', [curFestival, fileName]);
   });
 }
