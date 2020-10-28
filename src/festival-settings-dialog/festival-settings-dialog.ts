@@ -30,6 +30,7 @@ function addCategory(name: string | undefined = undefined,
   const row = document.createElement('tr');
   const catCell = document.createElement('td');
   const colCell = document.createElement('td');
+  const rankCell = document.createElement('td');
   const remCell = document.createElement('td');
 
   const catIn = document.createElement('input');
@@ -47,9 +48,9 @@ function addCategory(name: string | undefined = undefined,
   const rankIn = document.createElement('input');
   rankIn.type = 'number';
   rankIn.required = true;
-  rankIn.value = rank ? rank.toString() : (categoryTable.rows.length + 1).toString();
+  rankIn.value = rank ? rank.toString() : categoryTable.rows.length.toString();
   rankIn.step = '1';
-  colCell.appendChild(rankIn);
+  rankCell.appendChild(rankIn);
 
   const remBtn = document.createElement('button');
   remBtn.type = 'button';
@@ -64,6 +65,7 @@ function addCategory(name: string | undefined = undefined,
 
   row.appendChild(catCell);
   row.appendChild(colCell);
+  row.appendChild(rankCell);
   row.appendChild(remCell);
   categoryTable.appendChild(row);
 }

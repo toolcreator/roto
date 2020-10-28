@@ -1,4 +1,5 @@
 import { remote, ipcRenderer, BrowserWindow } from 'electron';
+import { BUILD_CONFIG } from '../build-config/build-config';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -8,14 +9,16 @@ function createFestivalSettingsDialog(): BrowserWindow {
   const dialogWindow = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
     modal: false,//true,
-    width: 250,
+    width: 300,
     height: 500,
     webPreferences: {
       nodeIntegration: true
     }
   });
   dialogWindow.loadFile(path.join(__dirname, '../../src/festival-settings-dialog/festival-settings-dialog.html'));
-  // dialogWindow.webContents.openDevTools();
+  if (BUILD_CONFIG.debug) {
+    dialogWindow.webContents.openDevTools();
+  }
   return dialogWindow;
 }
 
@@ -66,6 +69,7 @@ function openSettings(): void {
     for (const category of curFestival._bandCategories) {
       category.name = category._name;
       category.color = category._color;
+      category.rank = category._rank;
       dialogWindow.webContents.send('add-category', category);
     }
 });
@@ -86,7 +90,7 @@ export function init(): void {
     curFestival._startDate = festival._startDate.toJSON();
     curFestival._endDate = festival._endDate.toJSON();
     curFestival._bandCategories = festival._bandCategories;
-    curFestival._festivalAdapter = festival._festivalAdapter;
+    curFestival._adapter = festival._adapter;
     remote.getCurrentWebContents().send('festival-changed', [curFestival, fileName]);
   });
 }
