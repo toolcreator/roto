@@ -81,8 +81,8 @@ async function onFestivalChanged(f: any): Promise<void> {
     f._bands.forEach((band: any) => {
       const b = new Band(band._name, band._category, []);
       if (band._gigs.length > 0) {
-        band._gigs.foreach((gig: any) => {
-          b.gigs.push(new Gig(gig._stage, new Date(gig._startDate), new Date(gig._endDate)));
+        band._gigs.forEach((gig: any) => {
+          b.gigs.push(new Gig(gig._stage, new Date(gig._start), new Date(gig._end)));
         });
       }
       festival.bands.push(b);
