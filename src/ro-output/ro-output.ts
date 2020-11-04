@@ -52,8 +52,8 @@ export class RunningOrderOutput {
     this.root = document.getElementsByClassName('ro-output-content')[0] as HTMLElement;
   }
 
-  private buildRunningOrder(): void {
-    if (!this.day || this.bands.length == 0) {
+  private buildRunningOrder(day = this.day): void {
+    if (this.bands.length == 0) {
       this.root.innerHTML = '<p>There is no running order data yet...</p>';
       return;
     }
@@ -68,9 +68,9 @@ export class RunningOrderOutput {
     const todaysGigs: { gig: Gig, band: Band, category: BandCategory, clashes: boolean }[] = [];
     for (const band of this.bands) {
       for (const gig of band.gigs) {
-        if (gig.start.getFullYear() == this.day.getFullYear() &&
-          gig.start.getMonth() == this.day.getMonth() &&
-          gig.start.getDay() == this.day.getDay()) {
+        if (gig.start.getFullYear() == day.getFullYear() &&
+          gig.start.getMonth() == day.getMonth() &&
+          gig.start.getDay() == day.getDay()) {
           todaysGigs.push({ gig: gig, band: band, category: bandCategories[band.category], clashes: false });
         }
       }
@@ -117,7 +117,9 @@ export class RunningOrderOutput {
         }
       }
     }
-    
+
+
+
     // TODO
   }
 }
