@@ -1,4 +1,3 @@
-import { BandCategory } from '../model/band-category';
 import { Band } from '../model/band';
 import { Gig } from '../model/gig';
 
@@ -48,7 +47,7 @@ export class RunningOrderOutput {
 
   private buildRunningOrder(): void {
     if (!this.day || this.bands.length == 0) {
-      this.root.innerHTML = "<p>There is no running order data yet...</p>";
+      this.root.innerHTML = '<p>There is no running order data yet...</p>';
       return;
     }
 
@@ -67,7 +66,7 @@ export class RunningOrderOutput {
       const aStart = a.gig.start.getTime();
       const bStart = b.gig.start.getTime();
       return (aStart < bStart ? -1 : (aStart > bStart ? 1 : 0));
-    })
+    });
 
     if(this.stages.length == 0) {
       for(const gig of todaysGigs)  {
