@@ -28,28 +28,31 @@ function createFestival(): void {
 }
 
 function openFestival(): void {
-  const fileName = remote.dialog.showOpenDialogSync(remote.getCurrentWindow(), {
+  const fileNames = remote.dialog.showOpenDialogSync(remote.getCurrentWindow(), {
     title: 'Open Festival',
     filters: [{
       name: 'JSON',
       extensions: ['json']
     }],
     properties: ['openFile']
-  })[0];
-  if (fileName != undefined) {
-    let fileContent: string;
-    try {
-      fileContent = fs.readFileSync(fileName, 'utf8');
-    } catch (err) {
-      remote.dialog.showErrorBox('Could not open file.', (err as Error).message);
-      return;
-    }
-    try {
-      curFestival = JSON.parse(fileContent);
-      remote.getCurrentWebContents().send('festival-changed', [curFestival, fileName]);
-    } catch (err) {
-      remote.dialog.showErrorBox('Could not parse festival file', (err as Error).message);
-      return;
+  });
+  if (fileNames.length > 0) {
+    const fileName = fileNames[0];
+    if (fileName != undefined) {
+      let fileContent: string;
+      try {
+        fileContent = fs.readFileSync(fileName, 'utf8');
+      } catch (err) {
+        remote.dialog.showErrorBox('Could not open file.', (err as Error).message);
+        return;
+      }
+      try {
+        curFestival = JSON.parse(fileContent);
+        remote.getCurrentWebContents().send('festival-changed', [curFestival, fileName]);
+      } catch (err) {
+        remote.dialog.showErrorBox('Could not parse festival file', (err as Error).message);
+        return;
+      }
     }
   }
 }
@@ -73,7 +76,7 @@ function openSettings(): void {
       category.clash = category._clash;
       dialogWindow.webContents.send('add-category', category);
     }
-});
+  });
 }
 
 let settingsButton: HTMLButtonElement;
