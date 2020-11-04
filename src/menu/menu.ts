@@ -36,7 +36,7 @@ function openFestival(): void {
     }],
     properties: ['openFile']
   });
-  if (fileNames.length > 0) {
+  if (fileNames && fileNames.length > 0) {
     const fileName = fileNames[0];
     if (fileName != undefined) {
       let fileContent: string;
