@@ -115,6 +115,7 @@ async function onFestivalChanged(f: any): Promise<void> {
   }
 
   roOutput.setBands(festival.bands);
+  roOutput.setBandCategories(festival.bandCategories);
   roOutput.setStages(festival.stages);
 
   Menu.setSettingsButtonDisabled(false);
