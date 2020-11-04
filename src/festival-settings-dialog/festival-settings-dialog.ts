@@ -17,7 +17,7 @@ ipcRenderer.on('set-end-date', (event: Electron.IpcRendererEvent, endDate: strin
 });
 
 ipcRenderer.on('add-category', (event: Electron.IpcRendererEvent, category: BandCategory | undefined) => {
-  addCategory(category?.name, category?.color, category?.rank);
+  addCategory(category?.name, category?.color, category?.rank, category?.clash);
 });
 
 ipcRenderer.on('set-adapter', (event: Electron.IpcRendererEvent, adapter: number) => {
@@ -26,11 +26,13 @@ ipcRenderer.on('set-adapter', (event: Electron.IpcRendererEvent, adapter: number
 
 function addCategory(name: string | undefined = undefined,
                      color: string | undefined = undefined,
-                     rank: number | undefined = undefined): void {
+                     rank: number | undefined = undefined,
+                     clash: boolean |undefined = undefined): void {
   const row = document.createElement('tr');
   const catCell = document.createElement('td');
   const colCell = document.createElement('td');
   const rankCell = document.createElement('td');
+  const clashCell = document.createElement('td');
   const remCell = document.createElement('td');
 
   const catIn = document.createElement('input');
@@ -52,6 +54,12 @@ function addCategory(name: string | undefined = undefined,
   rankIn.step = '1';
   rankCell.appendChild(rankIn);
 
+  const clashIn = document.createElement('input');
+  clashIn.type = 'checkbox';
+  clashIn.required = false;
+  clashIn.checked = clash ? clash : false;
+  clashCell.appendChild(clashIn);
+
   const remBtn = document.createElement('button');
   remBtn.type = 'button';
   remBtn.addEventListener('click', () => {
@@ -66,6 +74,7 @@ function addCategory(name: string | undefined = undefined,
   row.appendChild(catCell);
   row.appendChild(colCell);
   row.appendChild(rankCell);
+  row.appendChild(clashCell);
   row.appendChild(remCell);
   categoryTable.appendChild(row);
 }
@@ -83,7 +92,8 @@ function submit(): void {
     const catName = (<HTMLInputElement>cells[0].firstChild).value.trim();
     const catColor = (<HTMLInputElement>cells[1].firstChild).value;
     const catRank = parseInt((<HTMLInputElement>cells[2].firstChild).value);
-    bandCategories.push(new BandCategory(catName, catColor, catRank));
+    const catClash = (<HTMLInputElement>cells[3].firstChild).checked;
+    bandCategories.push(new BandCategory(catName, catColor, catRank, catClash));
   }
 
   const festival = new Festival(

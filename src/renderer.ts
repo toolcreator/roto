@@ -68,7 +68,7 @@ async function onFestivalChanged(f: any): Promise<void> {
   festival.endDate = new Date(f._endDate);
   festival.bandCategories = [];
   f._bandCategories.forEach((bandCategory: any) => {
-    festival.bandCategories.push(new BandCategory(bandCategory._name, bandCategory._color, bandCategory._rank));
+    festival.bandCategories.push(new BandCategory(bandCategory._name, bandCategory._color, bandCategory._rank, bandCategory._clash));
   });
   festival.adapter = f._adapter;
 

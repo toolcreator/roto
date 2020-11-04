@@ -70,6 +70,7 @@ function openSettings(): void {
       category.name = category._name;
       category.color = category._color;
       category.rank = category._rank;
+      category.clash = category._clash;
       dialogWindow.webContents.send('add-category', category);
     }
 });
