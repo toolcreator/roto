@@ -5,13 +5,18 @@
 .ro-output-content td {
     text-align    : center;
     vertical-align: middle;
-    border        : solid 1px black;
+}
+
+.ro-output-content th {
+    border: 1px solid lightgray;
 }
 
 .ro-output-content table {
     empty-cells: hide;
+    overflow: auto;
 }
 
+/*
 .ro-output-content div.page {
     page-break-inside          : avoid !important;
     -webkit-region-break-inside: avoid !important;
@@ -25,3 +30,4 @@
     -webkit-region-break-after : auto !important;
     position: relative;
 }
+*/
