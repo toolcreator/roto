@@ -7,8 +7,8 @@ import { BandCategory } from '../model/band-category';
 
 describe('Band list', () => {
   const bandCategories = [
-    new BandCategory('must-see', 'green'),
-    new BandCategory('nope', 'white')
+    new BandCategory('must-see', 'green', 1, true),
+    new BandCategory('nope', 'white', 2, false)
   ];
 
   const bands = [

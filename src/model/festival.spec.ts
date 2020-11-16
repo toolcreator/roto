@@ -10,8 +10,8 @@ describe('Festival', () => {
   const START_DATE = new Date(2020, 4, 1);
   const END_DATE = new Date(2020, 4, 5);
   const BAND_CATEGORIES = [
-    new BandCategory('must-see', 'green'),
-    new BandCategory('nope', 'white')
+    new BandCategory('must-see', 'green', 1, true),
+    new BandCategory('nope', 'white', 2, false)
   ];
   const ADAPTER = FestivalAdapters.NONE;
   const BANDS = [
@@ -21,7 +21,7 @@ describe('Festival', () => {
   let festival: Festival;
 
   beforeEach(() => {
-    festival = new Festival(NAME, START_DATE, END_DATE, BAND_CATEGORIES, ADAPTER, BANDS);
+    festival = new Festival(NAME, START_DATE, END_DATE, BAND_CATEGORIES, ADAPTER, [], BANDS);
   });
 
   it('gets its name', () => {
@@ -75,7 +75,7 @@ describe('Festival', () => {
 
   it('sets its categories', () => {
     const NEW_CATEGORIES = [
-      new BandCategory('category', 'blue')
+      new BandCategory('category', 'blue', 10, false)
     ];
     expect(NEW_CATEGORIES).to.not.equal(BAND_CATEGORIES);
     festival.bandCategories = NEW_CATEGORIES;

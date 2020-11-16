@@ -8,7 +8,7 @@ describe('Band category', () => {
   let bandCategory: BandCategory;
 
   beforeEach(() => {
-    bandCategory = new BandCategory(NAME, COLOR);
+    bandCategory = new BandCategory(NAME, COLOR, 1, true);
   });
 
   it('gets its name', () => {
